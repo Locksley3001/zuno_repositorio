@@ -342,11 +342,19 @@ function deleteProduct(id) {
 }
 
 // =============================================
-// 6. EDITAR (PLACEHOLDER)
+// 6. EDITAR PRODUCTO
+// Código anterior (comentado):
+//   function editProduct(id) {
+//       alert('La función de edición estará disponible próximamente.');
+//   }
+// Se reemplaza porque edit-product.html ya está implementado.
+// Ahora el botón "Editar" navega directamente a la página de edición
+// pasando el ID del producto como parámetro en la query string.
 // =============================================
 
 function editProduct(id) {
-    alert('La función de edición estará disponible próximamente.');
+    // Navegar a edit-product.html?id=ID en la misma pestaña
+    window.location.href = `./edit-product.html?id=${id}`;
 }
 
 // =============================================

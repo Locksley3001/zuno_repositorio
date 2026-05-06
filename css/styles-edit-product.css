@@ -1,0 +1,287 @@
+/* styles-edit-product.css
+   ─────────────────────────────────────────────────────────────────────
+   PROPÓSITO:
+   Este archivo SOLO contiene los estilos específicos de la página
+   edit-product.html que NO están ya cubiertos por styles-seller.css.
+   Todo el formulario (form-group, inputs, dropdowns, imagen, etc.)
+   se hereda íntegramente de styles-seller.css para no duplicar código.
+
+   IDENTIDAD VISUAL:
+   Oscuro, glassmorphism, gradientes azules (#a8d8ff / #4968ff).
+   Coherente con seller.html, product.html y product-stats.html.
+
+   PARA MODIFICAR:
+   - Colores: buscar rgba() y gradientes.
+   - Espaciados: ajustar padding/gap en las secciones.
+   ─────────────────────────────────────────────────────────────────────
+*/
+
+/* =============================================
+   LAYOUT BASE
+   ============================================= */
+
+.ep-content {
+    padding-top: 120px; /* Espacio bajo el navbar fijo, igual que seller */
+    min-height: 100vh;
+    color: white;
+}
+
+/* =============================================
+   ESTADOS: CARGA Y ERROR
+   ============================================= */
+
+.ep-loading,
+.ep-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 15px;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Spinner: círculo giratorio idéntico al de product-stats.html */
+.ep-spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid rgba(168, 216, 255, 0.15);
+    border-top-color: rgba(168, 216, 255, 0.8);
+    animation: epSpin 0.8s linear infinite;
+}
+
+@keyframes epSpin {
+    to { transform: rotate(360deg); }
+}
+
+.ep-error-icon {
+    color: rgba(168, 216, 255, 0.45);
+    margin-bottom: 4px;
+}
+
+.ep-error h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.ep-error p {
+    color: rgba(255, 255, 255, 0.45);
+    max-width: 320px;
+    line-height: 1.6;
+}
+
+/* Botón "Volver al panel" del estado de error */
+.ep-btn-back {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: rgba(168, 216, 255, 0.1);
+    border: 1px solid rgba(168, 216, 255, 0.25);
+    border-radius: 100px;
+    color: rgba(168, 216, 255, 0.9);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.ep-btn-back:hover {
+    background: rgba(168, 216, 255, 0.2);
+    color: white;
+}
+
+/* =============================================
+   BREADCRUMB
+   ============================================= */
+
+.ep-breadcrumb {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 36px 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+    flex-wrap: wrap;
+}
+
+.ep-breadcrumb-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.45);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.ep-breadcrumb-link:hover {
+    color: rgba(168, 216, 255, 0.85);
+}
+
+.ep-breadcrumb-sep {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 12px;
+}
+
+.ep-breadcrumb-current {
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 500;
+}
+
+/* =============================================
+   HEADER DE LA PÁGINA
+   ============================================= */
+
+.ep-header-section {
+    padding: 24px 24px 32px;
+}
+
+.ep-header-container {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.ep-page-title {
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 0%, #a8d8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.ep-page-desc {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.6;
+}
+
+/* =============================================
+   SECCIÓN DEL FORMULARIO
+   Reutiliza .seller-container de styles-seller.css
+   (max-width: 600px, margin: 0 auto).
+   Solo se añade padding vertical de la sección.
+   ============================================= */
+
+.ep-form-section {
+    padding: 0 20px 80px;
+}
+
+/* =============================================
+   BOTONES DEL FORMULARIO
+   "Guardar cambios" reutiliza .publish-btn de styles-seller.css.
+   Solo se añade el botón "Cancelar" y el wrapper.
+   ============================================= */
+
+.ep-form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+/* Botón cancelar: glass neutro, coherente con btn-close-form */
+.ep-btn-cancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.ep-btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.88);
+}
+
+/* =============================================
+   TOAST DE CONFIRMACIÓN
+   Aparece en la esquina inferior derecha al guardar.
+   Se muestra con .ep-toast--visible (clase añadida por JS).
+   ============================================= */
+
+.ep-toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: rgba(10, 14, 35, 0.96);
+    border: 1px solid rgba(168, 216, 255, 0.22);
+    border-radius: 12px;
+    padding: 14px 20px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Oculto por defecto */
+    transform: translateY(16px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.ep-toast--visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.ep-toast-icon {
+    color: #4ade80; /* Verde confirmación */
+    flex-shrink: 0;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 768px) {
+    .ep-content {
+        padding-top: 100px;
+    }
+
+    .ep-page-title {
+        font-size: 24px;
+    }
+
+    .ep-breadcrumb {
+        padding: 24px 16px 0;
+    }
+
+    .ep-header-section {
+        padding: 16px 16px 24px;
+    }
+
+    .ep-form-section {
+        padding: 0 16px 60px;
+    }
+
+    .ep-toast {
+        bottom: 20px;
+        right: 16px;
+        left: 16px;
+        justify-content: center;
+    }
+}
