@@ -1,0 +1,645 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Perfil solo visible dentro del desplegable mobile del navbar simple. */
+.mobile-profile-link {
+    display: none;
+}
+
+/* Refuerzo UX: tres barras apiladas como hamburguesa estandar. */
+.nav-toggle {
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nav-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+    /* Layout mobile del navbar simple: logo izquierda, hamburguesa derecha,
+       y menu en flujo para que el fondo glass cubra el contenido abierto. */
+    .navbar-container {
+        padding: 10px 16px;
+        height: auto;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .navbar-logo {
+        order: 1;
+        flex: 1 1 auto;
+    }
+
+    .nav-toggle {
+        order: 2;
+        position: static;
+        display: inline-flex;
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+    }
+
+    .nav-links {
+        order: 3;
+        position: static;
+        flex: 0 0 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        transform: none;
+        opacity: 0;
+        max-height: 0;
+        pointer-events: none;
+        overflow: hidden;
+        transition: opacity 0.28s ease, max-height 0.28s ease, padding 0.28s ease;
+    }
+
+    .navbar-glass.open .nav-links,
+    .nav-links.active {
+        opacity: 1;
+        max-height: 360px;
+        padding: 14px 0 16px;
+        pointer-events: auto;
+    }
+
+    .mobile-profile-link {
+        display: list-item;
+    }
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000000; /* Color base oscuro para mantener legibilidad */
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Fondo animado de degradado fluido.
+   - Cambia los colores en background-image.
+   - Ajusta la velocidad en animation-duration.
+   - Modifica la opacidad para hacer el efecto más sutil o más fuerte. */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.65; /* Controla la intensidad general del efecto */
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(73, 104, 255, 0.14), transparent 22%),
+        radial-gradient(circle at 80% 10%, rgba(154, 100, 255, 0.12), transparent 18%),
+        radial-gradient(circle at 20% 95%, rgba(40, 78, 180, 0.12), transparent 20%),
+        linear-gradient(140deg, #02030a 0%, #050a1c 30%, #090f28 55%, #050316 100%);
+    background-size: 280% 280%;
+    animation: gradientFlow 30s ease infinite;
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+/* Navbar con efecto Glass Morphism Flotante */
+.navbar-glass {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    z-index: 1000;
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.08);
+    
+    border-radius: 100px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2),
+        0 0 40px rgba(255, 255, 255, 0.05);
+}
+
+.navbar-container {
+    padding: 0 30px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Logo | Links | Derecha */
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Logo */
+.navbar-logo {
+    flex: 0 0 auto;
+    /* Elimina position: absolute y left: 30px */
+}
+
+.navbar-logo a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.logo-text {
+    font-size: 28px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ffffff 0%, #a8d8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    letter-spacing: 2px;
+    filter: drop-shadow(0 0 10px rgba(168, 216, 255, 0.3));
+}
+
+/* Links de navegación */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin: 0;
+    flex: 1; /* Ocupa el espacio central */
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 4px 0;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(168, 216, 255, 0.5);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ffffff, #a8d8ff);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+    box-shadow: 0 0 10px rgba(168, 216, 255, 0.6);
+}
+
+.nav-links a.nav-special {
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(168, 216, 255, 0.18));
+    color: #ffffff;
+    border: 1px solid rgba(168, 216, 255, 0.4);
+    box-shadow: 0 10px 24px rgba(168, 216, 255, 0.14);
+}
+
+.nav-links a.nav-special:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(168, 216, 255, 0.28));
+    color: #f8fbff;
+    transform: translateY(-1px);
+}
+
+.nav-links a.nav-special::after {
+    display: none;
+}
+
+/* Botones de autenticación */
+.auth-buttons {
+    display: flex;
+    gap: 12px;
+    flex: 0 0 auto;
+}
+
+.btn-login, .btn-register {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.btn-login {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-login:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 
+        0 8px 24px rgba(168, 216, 255, 0.25),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.btn-register {
+    background: linear-gradient(135deg, rgba(168, 216, 255, 0.3), rgba(100, 180, 255, 0.3));
+    color: #ffffff;
+    border: 2px solid rgba(168, 216, 255, 0.5);
+}
+
+.btn-register:hover {
+    background: linear-gradient(135deg, rgba(168, 216, 255, 0.5), rgba(100, 180, 255, 0.5));
+    border-color: rgba(168, 216, 255, 0.8);
+    transform: translateY(-3px);
+    box-shadow: 
+        0 8px 24px rgba(168, 216, 255, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+/* Contenido principal */
+.main-content {
+    min-height: 100vh; /* Mantiene el hero centrado verticalmente en pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+.hero-card {
+    width: 100%;
+    max-width: 920px;
+    padding-top: 0; /* El centrado se gestiona desde el contenedor principal */
+}
+
+.hero-title {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: 0.5px;
+    color: white;
+    text-shadow: 0 0 24px rgba(168, 216, 255, 0.15), 0 2px 12px rgba(0, 0, 0, 0.35);
+    animation: glowPulse 6s ease-in-out infinite alternate;
+}
+
+.hero-title .typewriter-text {
+    white-space: pre-wrap; /* Permite saltos de línea con \n */
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.hero-description {
+    margin: 24px auto 0;
+    max-width: 760px;
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.88);
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.hero-description.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 32px;
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    transition: opacity 0.65s ease 0.15s, transform 0.65s ease 0.15s;
+}
+
+.hero-actions.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.hero-actions button {
+    min-width: 160px;
+    padding: 14px 26px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, rgba(168, 216, 255, 0.35), rgba(100, 180, 255, 0.42));
+    box-shadow: 0 18px 40px rgba(100, 180, 255, 0.14);
+}
+
+.typewriter-cursor {
+    display: inline-block;
+    color: #ffffff;
+    animation: blinkCursor 0.8s steps(2, start) infinite;
+}
+
+@keyframes blinkCursor {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
+}
+
+@keyframes glowPulse {
+    from {
+        text-shadow: 0 0 22px rgba(168, 216, 255, 0.15), 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+    to {
+        text-shadow: 0 0 34px rgba(168, 216, 255, 0.22), 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+}
+
+/* Botón hamburguesa pequeño para móvil */
+.nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    position: absolute;
+    right: 30px;
+}
+
+.nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin: 0;
+    flex: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar-glass {
+        top: 15px;
+        width: calc(100% - 30px);
+        border-radius: 20px;
+    }
+
+    .navbar-container {
+        padding: 0 18px;
+        height: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin: 0;
+        padding: 16px 0 18px;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        background: rgba(255, 255, 255, 0.08);
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        transform-origin: top;
+        transform: scaleY(0);
+        opacity: 0;
+        max-height: 0;
+        pointer-events: none;
+        overflow: hidden;
+        transition: transform 0.28s ease, opacity 0.28s ease, max-height 0.28s ease;
+        z-index: 1;
+    }
+
+    .navbar-glass.open .nav-links {
+        transform: scaleY(1);
+        opacity: 1;
+        max-height: 260px;
+        pointer-events: auto;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+    }
+
+    .nav-links a {
+        font-size: 15px;
+    }
+
+    .logo-text {
+        font-size: 24px;
+    }
+
+    .btn-login, .btn-register {
+        padding: 10px 20px;
+        font-size: 13px;
+        border-radius: 12px;
+    }
+
+    .main-content {
+        min-height: calc(100vh - 100px);
+    }
+
+    .hero-title {
+        font-size: 38px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    .hero-actions {
+        margin-top: 26px;
+    }
+}
+
+/* Overrides finales del navbar mobile simple: se dejan al final para ganar
+   prioridad frente al responsive original de esta hoja. */
+@media (max-width: 768px) {
+    .navbar-container {
+        padding: 10px 16px;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .navbar-logo {
+        order: 1;
+        flex: 1 1 auto;
+    }
+
+    .nav-toggle {
+        order: 2;
+        position: static;
+        display: inline-flex;
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+    }
+
+    .nav-links {
+        order: 3;
+        position: static;
+        flex: 0 0 100%;
+        width: 100%;
+        padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        transform: none;
+        transition: opacity 0.28s ease, max-height 0.28s ease, padding 0.28s ease;
+    }
+
+    .navbar-glass.open .nav-links,
+    .nav-links.active {
+        opacity: 1;
+        max-height: 360px;
+        padding: 14px 0 16px;
+        pointer-events: auto;
+    }
+
+    .mobile-profile-link {
+        display: list-item;
+    }
+}
+
+/* =============================================
+   SCROLLBAR PERSONALIZADA
+   ─────────────────────────────────────────────
+   POR QUÉ SE AGREGA:
+   El navegador usaba la scrollbar por defecto del sistema operativo
+   (gris clara en Windows/macOS), que contrasta fuertemente con el
+   fondo oscuro (#000 + gradiente azul) y rompe la identidad visual.
+   En mobile la scrollbar del sistema suele ser transparente/overlay
+   y no se percibía el problema. En desktop era muy visible.
+ 
+   SOLUCIÓN:
+   ::-webkit-scrollbar-* cubre Chrome, Edge, Safari y Opera (webkit).
+   Firefox usa scrollbar-width + scrollbar-color (propiedades estándar).
+   Se aplican tanto en el body como en todos los contenedores con scroll
+   para garantizar coherencia en toda la app.
+ 
+   PARA MODIFICAR:
+   - Grosor:        cambiar el valor en ::-webkit-scrollbar { width }
+   - Color thumb:   cambiar los rgba en ::-webkit-scrollbar-thumb y scrollbar-color
+   - Color track:   cambiar el rgba en ::-webkit-scrollbar-track
+   ============================================= */
+ 
+/* ── FIREFOX: scrollbar estándar ──
+   scrollbar-width: thin  → barra delgada
+   scrollbar-color: <thumb> <track>             */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(168, 216, 255, 0.35) rgba(255, 255, 255, 0.04);
+}
+ 
+/* ── WEBKIT (Chrome, Edge, Safari, Opera) ── */
+ 
+/* Grosor de la scrollbar.
+   8px es suficientemente visible sin ser intrusivo. */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* Para scrollbars horizontales */
+}
+ 
+/* Track: el carril de fondo donde se desliza el thumb.
+   Fondo muy oscuro con ligera transparencia para que se
+   integre con el gradiente de fondo del body. */
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 100px;
+}
+ 
+/* Thumb: la barra que el usuario arrastra.
+   Usa el color principal del sistema (#a8d8ff) con
+   opacidad reducida para no dominar visualmente. */
+::-webkit-scrollbar-thumb {
+    background: rgba(168, 216, 255, 0.3);
+    border-radius: 100px;
+    /* Borde interior oscuro da sensación de profundidad */
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    transition: background 0.3s ease;
+}
+ 
+/* Hover: el thumb se vuelve más brillante al pasar el cursor,
+   indicando que es interactivo. */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(168, 216, 255, 0.55);
+}
+ 
+/* Active (mientras se arrastra): más opaco para feedback táctil */
+::-webkit-scrollbar-thumb:active {
+    background: rgba(168, 216, 255, 0.72);
+}
+ 
+/* Corner: la esquina donde se cruzan scrollbar horizontal y vertical.
+   Sin este estilo aparece un cuadrado blanco en la esquina inferior derecha
+   cuando hay scroll en ambos ejes. */
+::-webkit-scrollbar-corner {
+    background: transparent;
+}

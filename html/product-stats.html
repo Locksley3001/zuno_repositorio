@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas - Zuno</title>
+    <!-- Identidad visual base -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles-navbar.css">
+    <!-- Estilos específicos de esta página -->
+    <link rel="stylesheet" href="../css/styles-product-stats.css">
+</head>
+<body>
+
+    <!-- ==========================================
+         NAVBAR (reutilizado del sistema)
+         ========================================== -->
+    <nav class="navbar-glass">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <a href="./intex.html"><span class="logo-text">ZUNO</span></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="./shop.html">Explorar</a></li>
+                <li><a href="./categories.html">Categorías</a></li>
+                <li><a href="./trending.html">Tendencias</a></li>
+                <li><a href="./how-it-works.html">Cómo funciona</a></li>
+                <li><a class="nav-special" href="./seller.html">Vendedor</a></li>
+                <li class="mobile-profile-link"><a href="./login.html">Perfil</a></li>
+            </ul>
+            <div class="navbar-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar productos..." id="navbar-search">
+                    <button class="search-btn" aria-label="Buscar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M21 21L16.5 16.5M19 11C19 15.4183 15.4183 19 11 19S3 15.4183 3 11 6.58172 3 11 3s8 3.58172 8 8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <button class="cart-btn" aria-label="Carrito">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 22C7.89543 22 7 21.1046 7 20V8C7 6.89543 7.89543 6 9 6H15C16.1046 6 17 6.89543 17 8V20C17 21.1046 16.1046 22 15 22H9Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M7 6V4C7 2.89543 7.89543 2 9 2H15C16.1046 2 17 2.89543 17 4V6" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="9.5" cy="20.5" r="0.5" fill="currentColor"/>
+                        <circle cx="14.5" cy="20.5" r="0.5" fill="currentColor"/>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="profile-btn" aria-label="Perfil">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <button class="nav-toggle" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         CONTENIDO PRINCIPAL
+         Todo el contenido se inyecta por JS.
+         Mientras carga se muestra #loading-state.
+         Si el producto no existe se muestra #error-state.
+         ========================================== -->
+    <main class="stats-content">
+
+        <!-- Estado de carga (visible hasta que JS procesa el producto) -->
+        <div class="loading-state" id="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Cargando estadísticas...</p>
+        </div>
+
+        <!-- Estado de error (producto no encontrado) -->
+        <div class="error-state" id="error-state" style="display:none">
+            <div class="error-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M12 8V12M12 16H12.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h2>Producto no encontrado</h2>
+            <p>El producto que buscas no existe o fue eliminado.</p>
+            <a href="./seller.html" class="btn-back">Volver al panel</a>
+        </div>
+
+        <!-- Contenido principal: se muestra cuando el producto es encontrado -->
+        <div class="stats-main" id="stats-main" style="display:none">
+
+            <!-- ==========================================
+                 HEADER DE LA PÁGINA
+                 Incluye breadcrumb + info del producto
+                 ========================================== -->
+            <section class="stats-header-section">
+                <div class="stats-header-container">
+
+                    <!-- Breadcrumb + título -->
+                    <div class="stats-title-area">
+                        <a href="./seller.html" class="breadcrumb-back">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Panel de vendedor
+                        </a>
+                        <h1 class="stats-page-title">Estadísticas del producto</h1>
+                    </div>
+
+                    <!-- Tarjeta de información del producto -->
+                    <div class="product-info-card" id="product-info-card">
+                        <!-- Inyectado por JS: imagen, título, categoría, precio -->
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 GRID DE MÉTRICAS PRINCIPALES
+                 4 tarjetas: Vistas, Compras, Estado, Ingresos
+                 Los valores se inyectan por JS
+                 ========================================== -->
+            <section class="metrics-section">
+                <div class="stats-container">
+                    <h2 class="section-label">Métricas principales</h2>
+                    <div class="metrics-grid" id="metrics-grid">
+                        <!-- Inyectado por JS con renderMetrics() -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 GRÁFICO DE VISTAS
+                 SVG canvas renderizado por JS con datos simulados
+                 ========================================== -->
+            <section class="chart-section">
+                <div class="stats-container">
+                    <div class="chart-header">
+                        <div>
+                            <h2 class="section-label">Evolución de vistas</h2>
+                            <p class="chart-subtitle">Últimos 14 días</p>
+                        </div>
+                        <!-- Badge de tendencia del gráfico (inyectado por JS) -->
+                        <span class="chart-trend-badge" id="chart-trend-badge"></span>
+                    </div>
+                    <div class="chart-wrapper">
+                        <!-- El SVG del gráfico se inyecta aquí por renderChart() -->
+                        <div id="chart-canvas"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 ACTIVIDAD RECIENTE
+                 Lista de eventos simulados del producto
+                 ========================================== -->
+            <section class="activity-section">
+                <div class="stats-container">
+                    <h2 class="section-label">Actividad reciente</h2>
+                    <ul class="activity-list" id="activity-list">
+                        <!-- Inyectado por JS con renderActivity() -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 FOOTER DE LA PÁGINA
+                 Botón volver al panel
+                 ========================================== -->
+            <section class="stats-footer-section">
+                <div class="stats-container">
+                    <a href="./seller.html" class="btn-back-panel">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Volver al panel
+                    </a>
+                </div>
+            </section>
+
+        </div><!-- /stats-main -->
+
+    </main>
+
+    <footer class="seller-footer">
+        <p>© 2024 Zuno. Todos los derechos reservados.</p>
+        <div class="footer-links">
+            <a href="#">Términos</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Contacto</a>
+        </div>
+    </footer>
+
+    <script src="../js/script-cart-utils.js"></script>
+    <script src="../js/script-product-stats.js"></script>
+</body>
+</html>

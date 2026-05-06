@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto - Zuno</title>
+    <!-- Identidad visual base -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles-navbar.css">
+    <!-- Estilos específicos de esta página -->
+    <link rel="stylesheet" href="../css/styles-product.css">
+</head>
+<body>
+
+    <!-- ==========================================
+         NAVBAR (reutilizado del sistema)
+         ========================================== -->
+    <nav class="navbar-glass">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <a href="./intex.html"><span class="logo-text">ZUNO</span></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="./shop.html">Explorar</a></li>
+                <li><a href="./categories.html">Categorías</a></li>
+                <li><a href="./trending.html">Tendencias</a></li>
+                <li><a href="./how-it-works.html">Cómo funciona</a></li>
+                <li><a class="nav-special" href="./seller.html">Vendedor</a></li>
+                <li class="mobile-profile-link"><a href="./login.html">Perfil</a></li>
+            </ul>
+            <div class="navbar-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar productos..." id="navbar-search">
+                    <button class="search-btn" aria-label="Buscar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M21 21L16.5 16.5M19 11C19 15.4183 15.4183 19 11 19S3 15.4183 3 11 6.58172 3 11 3s8 3.58172 8 8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <button class="cart-btn" id="cart-btn" aria-label="Carrito">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 22C7.89543 22 7 21.1046 7 20V8C7 6.89543 7.89543 6 9 6H15C16.1046 6 17 6.89543 17 8V20C17 21.1046 16.1046 22 15 22H9Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M7 6V4C7 2.89543 7.89543 2 9 2H15C16.1046 2 17 2.89543 17 4V6" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="9.5" cy="20.5" r="0.5" fill="currentColor"/>
+                        <circle cx="14.5" cy="20.5" r="0.5" fill="currentColor"/>
+                    </svg>
+                    <span class="cart-count" id="cart-count">0</span>
+                </button>
+                <button class="profile-btn" aria-label="Perfil">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <button class="nav-toggle" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         CONTENIDO PRINCIPAL
+         Inyectado dinámicamente por script-product.js
+         Mientras carga: #loading-state
+         Si no existe el producto: #error-state
+         Si se encuentra: #product-main
+         ========================================== -->
+    <main class="product-content">
+
+        <!-- Estado de carga -->
+        <div class="pd-loading" id="loading-state">
+            <div class="pd-spinner"></div>
+            <p>Cargando producto...</p>
+        </div>
+
+        <!-- Estado de error (producto no encontrado) -->
+        <div class="pd-error" id="error-state" style="display:none">
+            <div class="pd-error-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M12 8V12M12 16H12.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h2>Producto no encontrado</h2>
+            <p>El producto que buscas no existe o fue eliminado.</p>
+            <a href="./shop.html" class="pd-btn-back">Explorar productos</a>
+        </div>
+
+        <!-- Contenido principal: se muestra cuando el producto es encontrado -->
+        <div id="product-main" style="display:none">
+
+            <!-- ==========================================
+                 BREADCRUMB
+                 Ruta de navegación: Explorar > Categoría > Producto
+                 Inyectado por renderBreadcrumb()
+                 ========================================== -->
+            <nav class="pd-breadcrumb" id="pd-breadcrumb" aria-label="Navegación"></nav>
+
+            <!-- ==========================================
+                 SECCIÓN PRINCIPAL EN DOS COLUMNAS
+                 Izquierda: imagen grande
+                 Derecha:   categoría, título, precio, badge, botones
+                 Inyectado por renderHero()
+                 ========================================== -->
+            <section class="pd-hero-section">
+                <div class="pd-hero-container" id="pd-hero">
+                    <!-- Columna izquierda: imagen -->
+                    <!-- Columna derecha: info + acciones -->
+                    <!-- Ambas inyectadas por JS -->
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 SECCIÓN DESCRIPCIÓN
+                 Muestra el campo description del producto
+                 Inyectado por renderDescription()
+                 ========================================== -->
+            <section class="pd-description-section">
+                <div class="pd-section-container">
+                    <h2 class="pd-section-title">Descripción</h2>
+                    <div class="pd-description-body" id="pd-description"></div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 SECCIÓN PRODUCTOS RELACIONADOS
+                 Misma categoría, máx 3 tarjetas
+                 Inyectado por renderRelated()
+                 Oculto si no hay suficientes productos
+                 ========================================== -->
+            <section class="pd-related-section" id="pd-related-section" style="display:none">
+                <div class="pd-section-container">
+                    <h2 class="pd-section-title">Productos relacionados</h2>
+                    <div class="pd-related-grid" id="pd-related-grid"></div>
+                </div>
+            </section>
+
+        </div><!-- /product-main -->
+
+    </main>
+
+    <!-- Footer simple coherente con el sistema -->
+    <footer class="pd-footer">
+        <p>© 2024 Zuno. Todos los derechos reservados.</p>
+        <div class="pd-footer-links">
+            <a href="#">Términos</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Contacto</a>
+        </div>
+    </footer>
+
+    <!-- Toast de confirmación (carrito) -->
+    <!-- Se muestra brevemente al agregar al carrito -->
+    <div class="pd-toast" id="pd-toast" aria-live="polite"></div>
+
+    <script src="../js/script-cart-utils.js"></script>
+    <script src="../js/script-product.js"></script>
+</body>
+</html>

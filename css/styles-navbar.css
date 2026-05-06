@@ -1,0 +1,464 @@
+/* Estilos del navbar para la tienda - Extensión de styles.css
+   Mantener identidad visual: glassmorphism, colores oscuros, gradientes azules
+   Agregar elementos de la derecha: buscador y carrito
+   Para modificar colores: cambiar rgba valores en background y color
+   Para ajustar tamaños: modificar font-size y padding
+   Para cambiar efectos: ajustar backdrop-filter y box-shadow */
+
+/* Asegura que el navbar ocupe todo el ancho */
+.navbar-glass {
+    width: 100%;
+}
+
+.navbar-container {
+    padding: 0 30px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;          /* ← AGREGAR */
+    box-sizing: border-box; /* ← AGREGAR */
+    justify-content: space-between; /* ← AGREGAR */
+}
+
+/* Logo - Mantener igual que en styles.css */
+.navbar-logo {
+    flex: 0 0 auto;
+    margin-right: 60px;
+}
+
+.navbar-logo a {
+    text-decoration: none;
+    display: flex; 
+    align-items: center;
+    cursor: pointer;
+}
+
+.logo-text {
+    font-size: 28px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ffffff 0%, #a8d8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    letter-spacing: 2px;
+    filter: drop-shadow(0 0 10px rgba(168, 216, 255, 0.3));
+}
+
+/* Links de navegación - Mantener igual que en styles.css */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin: 0 auto;   /* ← CAMBIAR de solo margin: 0 */
+    flex: 1;
+}
+
+.nav-links li {
+    position:relative;
+}
+
+.nav-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 4px 0;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(168, 216, 255, 0.5);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ffffff, #a8d8ff);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+    box-shadow: 0 0 10px rgba(168, 216, 255, 0.6);
+}
+
+.nav-links a.nav-special {
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(168, 216, 255, 0.18));
+    color: #ffffff;
+    border: 1px solid rgba(168, 216, 255, 0.4);
+    box-shadow: 0 10px 24px rgba(168, 216, 255, 0.14);
+}
+
+.nav-links a.nav-special:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(168, 216, 255, 0.28));
+    color: #f8fbff;
+    transform: translateY(-1px);
+}
+
+.nav-links a.nav-special::after {
+    display: none;
+}
+
+/* Elementos de la derecha: buscador y carrito */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 0 0 auto;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+}
+
+.search-bar:focus-within {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(168, 216, 255, 0.4);
+    box-shadow: 0 0 20px rgba(168, 216, 255, 0.2);
+}
+
+#navbar-search {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    outline: none;
+    width: 180px;
+}
+
+#navbar-search::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.search-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.3s ease;
+}
+
+.search-btn:hover {
+    color: #ffffff;
+}
+
+.cart-btn {
+    position: relative;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.cart-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(168, 216, 255, 0.4);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(168, 216, 255, 0.2);
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: linear-gradient(135deg, rgba(168, 216, 255, 0.8), rgba(100, 180, 255, 0.8));
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.profile-btn {
+    position: relative;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.profile-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(168, 216, 255, 0.4);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(168, 216, 255, 0.2);
+}
+
+/* Botón hamburguesa para móvil - Mantener igual que en styles.css */
+.nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    position: absolute;
+    right: 30px;
+}
+
+.nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Responsive para móvil */
+@media (max-width: 768px) {
+    .navbar-container {
+        padding: 0 18px;
+        height: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .navbar-right {
+        position: static;
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .search-bar {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    #navbar-search {
+        width: 100%;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin: 0;
+        padding: 16px 0 18px;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        background: rgba(255, 255, 255, 0.08);
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        transform-origin: top;
+        transform: scaleY(0);
+        opacity: 0;
+        max-height: 0;
+        pointer-events: none;
+        overflow: hidden;
+        transition: transform 0.28s ease, opacity 0.28s ease, max-height 0.28s ease;
+        z-index: 1;
+    }
+
+    .navbar-glass.open .nav-links {
+        transform: scaleY(1);
+        opacity: 1;
+        max-height: 300px;
+        pointer-events: auto;
+    }
+
+    .navbar-glass.open .nav-links {
+        transform: scaleY(1);
+        opacity: 1;
+        max-height: 300px;
+        pointer-events: auto;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+        order: 2;
+    }
+
+    .nav-links a {
+        font-size: 15px;
+    }
+}
+
+/* Perfil solo visible dentro del desplegable mobile. */
+.mobile-profile-link {
+    display: none;
+}
+
+/* Refuerzo UX: las tres barras se apilan como hamburguesa estandar. */
+.nav-toggle {
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nav-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+    .navbar-glass {
+        border-radius: 20px;
+        overflow: visible;
+    }
+
+    /* Layout mobile:
+       fila 1 = logo a la izquierda + carrito + hamburguesa a la derecha.
+       fila 2 = buscador al 100%.
+       El menu vive dentro del flujo para que el fondo glass cubra todo al abrir. */
+    .navbar-container {
+        padding: 10px 16px;
+        height: auto;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .navbar-logo {
+        order: 1;
+        flex: 1 1 auto;
+        margin-right: 0;
+        min-width: 0;
+    }
+
+    .logo-text {
+        font-size: 24px;
+    }
+
+    /* Hace que search, carrito y perfil se comporten como items directos
+       del flex mobile sin cambiar la estructura base del navbar. */
+    .navbar-right {
+        display: contents;
+    }
+
+    .search-bar {
+        order: 4;
+        width: 100%;
+        max-width: none;
+        padding: 8px 12px;
+    }
+
+    #navbar-search {
+        width: 100%;
+    }
+
+    .cart-btn {
+        order: 2;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        flex: 0 0 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile-btn {
+        display: none;
+    }
+
+    .nav-toggle {
+        order: 3;
+        display: inline-flex;
+        position: static;
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+    }
+
+    .nav-links {
+        order: 5;
+        position: static;
+        flex: 0 0 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        transform: none;
+        opacity: 0;
+        max-height: 0;
+        pointer-events: none;
+        overflow: hidden;
+        transition: opacity 0.28s ease, max-height 0.28s ease, padding 0.28s ease;
+        z-index: 1;
+    }
+
+    .navbar-glass.open .nav-links,
+    .nav-links.active {
+        opacity: 1;
+        max-height: 360px;
+        padding: 14px 0 16px;
+        pointer-events: auto;
+    }
+
+    .mobile-profile-link {
+        display: list-item;
+    }
+
+    .nav-links a {
+        font-size: 15px;
+    }
+}

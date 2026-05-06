@@ -1,0 +1,58 @@
+/* Estilos específicos de página de categoría
+   Reutiliza estilos de styles-shop.css
+   Extensiones menores para mantener consistencia visual
+   Mantiene identidad visual: colores oscuros, glassmorphism, gradientes azules */
+
+/* Encabezado de categoría */
+.category-header {
+    padding: 60px 20px 40px;
+    text-align: center;
+    border-bottom: 1px solid rgba(168, 216, 255, 0.1);
+}
+
+.category-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #a8d8ff 0%, #80c8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+
+.category-description {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Ajustar secciones para categoria */
+#trending-section .trending-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #a8d8ff;
+}
+
+.explore-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #a8d8ff;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .category-title {
+        font-size: 32px;
+    }
+
+    .category-description {
+        font-size: 14px;
+    }
+
+    .category-header {
+        padding: 40px 20px 30px;
+    }
+}

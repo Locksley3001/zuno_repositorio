@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tendencias - Zuno</title>
+    <!-- Estilos principales para mantener identidad visual -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Estilos específicos del navbar -->
+    <link rel="stylesheet" href="../css/styles-navbar.css">
+    <!-- Estilos de tarjetas de producto -->
+    <link rel="stylesheet" href="../css/styles-card.css">
+    <!-- Estilos específicos de la tienda -->
+    <link rel="stylesheet" href="../css/styles-shop.css">
+</head>
+<body>
+    <!-- Navbar con efecto glass -->
+    <nav class="navbar-glass">
+        <div class="navbar-container">
+            <!-- Logo -->
+            <div class="navbar-logo">
+                <a href="./intex.html"><span class="logo-text">ZUNO</span></a>
+            </div>
+
+            <!-- Links de navegación -->
+            <ul class="nav-links">
+                <li><a href="./shop.html">Explorar</a></li>
+                <li><a href="./categories.html">Categorías</a></li>
+                <li><a href="./trending.html">Tendencias</a></li>
+                <li><a href="./how-it-works.html">Cómo funciona</a></li>
+                <li><a class="nav-special" href="./seller.html">Vender</a></li>
+                <li class="mobile-profile-link"><a href="./login.html">Perfil</a></li>
+            </ul>
+
+            <!-- Elementos de la derecha: buscador y carrito -->
+            <div class="navbar-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar productos..." id="navbar-search">
+                    <button class="search-btn" aria-label="Buscar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 21L16.5 16.5M19 11C19 15.4183 15.4183 19 11 19S3 15.4183 3 11 6.58172 3 11 3s8 3.58172 8 8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <button class="cart-btn" aria-label="Carrito">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 22C7.89543 22 7 21.1046 7 20V8C7 6.89543 7.89543 6 9 6H15C16.1046 6 17 6.89543 17 8V20C17 21.1046 16.1046 22 15 22H9Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M7 6V4C7 2.89543 7.89543 2 9 2H15C16.1046 2 17 2.89543 17 4V6" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="9.5" cy="20.5" r="0.5" fill="currentColor"/>
+                        <circle cx="14.5" cy="20.5" r="0.5" fill="currentColor"/>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="profile-btn" aria-label="Perfil">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Botón hamburguesa para móvil -->
+            <button class="nav-toggle" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Contenido principal de tendencias -->
+    <main class="shop-content">
+        <!-- Encabezado -->
+        <section class="main-search">
+            <div class="search-container">
+                <h1>Tendencias</h1>
+                <p>Descubre los prompts más populares y visitados por la comunidad de Zuno.</p>
+            </div>
+        </section>
+
+        <!-- Productos trending -->
+        <section class="trending-section">
+            <div class="trending-container">
+                <div class="trending-grid" id="trending-grid">
+                    <!-- Productos trending se generan dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer simple -->
+        <footer class="footer">
+            <div class="footer-container">
+                <p>&copy; 2024 Zuno. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Términos</a>
+                    <a href="#">Privacidad</a>
+                    <a href="#">Contacto</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/script-cart-utils.js"></script>
+    <script src="../js/script-shop.js"></script>
+    <script>
+        // Script para menú hamburguesa
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navbar = document.querySelector('.navbar-glass');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (navToggle && navbar && navLinks) {
+                navToggle.addEventListener('click', function() {
+                    // Toggle mobile: abre el menu en flujo y anima la hamburguesa a X.
+                    const isOpen = navbar.classList.toggle('open');
+                    navToggle.classList.toggle('active', isOpen);
+                    navToggle.setAttribute('aria-expanded', String(isOpen));
+                    navToggle.setAttribute('aria-label', isOpen ? 'Cerrar menu' : 'Abrir menu');
+                });
+
+                // Cerrar menú al hacer click en un link
+                navLinks.addEventListener('click', function(e) {
+                    if (e.target.tagName === 'A') {
+                        navbar.classList.remove('open');
+                        navToggle.classList.remove('active');
+                        navToggle.setAttribute('aria-expanded', 'false');
+                        navToggle.setAttribute('aria-label', 'Abrir menu');
+                    }
+                });
+            }
+        });
+
+        // Inicialización específica para tendencias
+        document.addEventListener('DOMContentLoaded', function() {
+            // Renderizar productos trending
+            // Cómo funciona tendencias: Automáticos por interacción (4+ vistas), sección dedicada
+            const trendingProducts = products.filter(product => product.trending);
+            renderProducts(trendingProducts, 'trending-grid', true, 'trending');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendedor - Zuno</title>
+    <!-- Estilos principales para mantener identidad visual -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Estilos específicos del navbar -->
+    <link rel="stylesheet" href="../css/styles-navbar.css">
+    <!-- Estilos específicos del vendedor -->
+    <link rel="stylesheet" href="../css/styles-seller.css">
+</head>
+<body>
+    <!-- Navbar con efecto glass (reutilizado del sistema) -->
+    <nav class="navbar-glass">
+        <div class="navbar-container">
+            <!-- Logo -->
+            <div class="navbar-logo">
+                <a href="./intex.html"><span class="logo-text">ZUNO</span></a>
+            </div>
+
+            <!-- Links de navegación -->
+            <ul class="nav-links">
+                <li><a href="./shop.html">Explorar</a></li>
+                <li><a href="./categories.html">Categorías</a></li>
+                <li><a href="./trending.html">Tendencias</a></li>
+                <li><a href="./how-it-works.html">Cómo funciona</a></li>
+                <li><a class="nav-special" href="./seller.html">Vendedor</a></li>
+                <li class="mobile-profile-link"><a href="./login.html">Perfil</a></li>
+            </ul>
+
+            <!-- Elementos de la derecha: buscador y carrito -->
+            <div class="navbar-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar productos..." id="navbar-search">
+                    <button class="search-btn" aria-label="Buscar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 21L16.5 16.5M19 11C19 15.4183 15.4183 19 11 19S3 15.4183 3 11 6.58172 3 11 3s8 3.58172 8 8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <button class="cart-btn" aria-label="Carrito">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 22C7.89543 22 7 21.1046 7 20V8C7 6.89543 7.89543 6 9 6H15C16.1046 6 17 6.89543 17 8V20C17 21.1046 16.1046 22 15 22H9Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M7 6V4C7 2.89543 7.89543 2 9 2H15C16.1046 2 17 2.89543 17 4V6" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="9.5" cy="20.5" r="0.5" fill="currentColor"/>
+                        <circle cx="14.5" cy="20.5" r="0.5" fill="currentColor"/>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="profile-btn" aria-label="Perfil">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Botón hamburguesa para móvil -->
+            <button class="nav-toggle" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Contenido principal del vendedor -->
+    <main class="seller-content">
+
+        <!-- ==========================================
+             SECCIÓN 1: HEADER DEL PANEL
+             Muestra título, descripción y botón principal
+             ========================================== -->
+        <section class="seller-header-section">
+            <div class="seller-header-container">
+                <div class="seller-header-text">
+                    <h1 class="seller-panel-title">Panel de Vendedor</h1>
+                    <p class="seller-panel-desc">Gestiona tus productos, revisa tus publicaciones y crea nuevo contenido para la tienda.</p>
+                </div>
+                <!-- Botón principal que activa el formulario de creación -->
+                <button class="btn-create-product" id="btn-open-form" aria-label="Crear nuevo producto">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                    Crear Producto
+                </button>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SECCIÓN 2: FORMULARIO DE CREACIÓN
+             Oculto por defecto, se muestra al presionar "Crear Producto"
+             El formulario NO fue rediseñado, solo envuelto en un contenedor colapsable
+             ========================================== -->
+        <section class="seller-section seller-form-section" id="form-section" aria-hidden="true">
+            <div class="seller-container">
+                <div class="form-section-header">
+                    <h2>Crear Producto</h2>
+                    <!-- Botón para cerrar/colapsar el formulario -->
+                    <button class="btn-close-form" id="btn-close-form" aria-label="Cerrar formulario">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- FORMULARIO ORIGINAL SIN MODIFICACIONES DE DISEÑO -->
+                <form id="product-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="product-image">Imagen del Producto</label>
+                        <!-- Código anterior (comentado)
+                             Se reemplaza porque el input file nativo muestra "Elegir archivo"
+                             y rompe la coherencia visual del formulario.
+                             <input type="file" id="product-image" name="image" accept="image/*" required>
+                        -->
+                        <!-- Nueva implementación: el input real queda oculto visualmente y
+                             el botón personalizado abre el selector de archivos desde JS. -->
+                        <input class="file-input-native" type="file" id="product-image" name="image" accept="image/*" required>
+                        <div class="custom-file-control">
+                            <button type="button" class="file-select-btn" id="file-select-btn">Selecciona una imagen</button>
+                            <span class="file-name" id="file-name">Ninguna imagen seleccionada</span>
+                        </div>
+                        <img class="image-preview" id="image-preview" alt="Preview de imagen seleccionada" hidden>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-title">Título del Producto</label>
+                        <input type="text" id="product-title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-description">Descripción</label>
+                        <textarea id="product-description" name="description" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price">Precio ($)</label>
+                        <input type="number" id="product-price" name="price" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-category">Categoría</label>
+                        <!-- Código anterior (comentado)
+                             Se reemplaza porque el <select> nativo no permite diseño avanzado
+                             consistente entre navegadores: el panel de opciones lo pinta el sistema
+                             operativo y puede aparecer blanco/plano aunque el control cerrado tenga CSS.
+                             <select id="product-category" name="category" class="form-select" required>
+                                 <option value="">Seleccionar categoría</option>
+                             </select>
+                        -->
+                        <!-- Nueva implementación: input hidden para guardar el valor real del formulario
+                             y custom dropdown reutilizable renderizado desde script-seller.js. -->
+                        <input type="hidden" id="product-category" name="category" required>
+                        <div class="custom-select" data-target="product-category" data-placeholder="Seleccionar categoría">
+                            <button type="button" class="select-selected" aria-haspopup="listbox" aria-expanded="false">
+                                Seleccionar categoría
+                            </button>
+                            <ul class="select-options" role="listbox"></ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-ai">Inteligencia Artificial</label>
+                        <!-- Código anterior (comentado)
+                             Se reemplaza por la misma razón del campo categoría: el <select> nativo
+                             limita el diseño del menú desplegado y rompe la estética glass/dark.
+                             <select id="product-ai" name="aiTool" class="form-select" required>
+                                 <option value="">Seleccionar IA</option>
+                             </select>
+                        -->
+                        <input type="hidden" id="product-ai" name="aiTool" required>
+                        <div class="custom-select" data-target="product-ai" data-placeholder="Seleccionar IA">
+                            <button type="button" class="select-selected" aria-haspopup="listbox" aria-expanded="false">
+                                Seleccionar IA
+                            </button>
+                            <ul class="select-options" role="listbox"></ul>
+                        </div>
+                    </div>
+                    <button type="submit" class="publish-btn">Publicar Producto</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SECCIÓN 3: MIS PRODUCTOS (DASHBOARD)
+             Muestra todos los productos del vendedor en un grid
+             Se renderiza dinámicamente desde script-seller.js
+             ========================================== -->
+        <section class="seller-dashboard-section">
+            <div class="dashboard-container">
+
+                <!-- Encabezado de la sección con contador -->
+                <div class="dashboard-header">
+                    <h2 class="dashboard-title">Mis Productos</h2>
+                    <!-- El contador se actualiza desde JS cada vez que cambia el array -->
+                    <span class="product-count" id="product-count">0 productos</span>
+                </div>
+
+                <!-- ==========================================
+                     ESTADO VACÍO
+                     Visible cuando el array de productos está vacío
+                     Se oculta cuando hay al menos 1 producto
+                     ========================================== -->
+                <div class="empty-state" id="empty-state">
+                    <div class="empty-state-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M12 12V16M10 14H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <p class="empty-state-text">Aún no has creado productos</p>
+                    <p class="empty-state-subtext">Empieza publicando tu primer prompt y comienza a vender hoy.</p>
+                    <!-- Este botón también abre el formulario, igual que el del header -->
+                    <button class="btn-create-product" id="btn-empty-create" aria-label="Crear primer producto">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                        Crear Producto
+                    </button>
+                </div>
+
+                <!-- ==========================================
+                     GRID DE PRODUCTOS
+                     Oculto cuando no hay productos, visible cuando hay al menos 1
+                     Las tarjetas se generan dinámicamente con renderProductGrid()
+                     ========================================== -->
+                <div class="products-grid" id="products-grid">
+                    <!-- Las tarjetas de producto se insertan aquí por JavaScript -->
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer simple -->
+    <footer class="seller-footer">
+        <p>© 2024 Zuno. Todos los derechos reservados.</p>
+        <div class="footer-links">
+            <a href="#">Términos</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Contacto</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/script-cart-utils.js"></script>
+    <script src="../js/script-seller.js"></script>
+</body>
+</html>

@@ -1,0 +1,916 @@
+/* styles-seller.css - Estilos para la página de vendedor
+   Mantener identidad visual: colores oscuros, glassmorphism, gradientes azules
+   Espaciados y tipografía consistente con el resto del sitio
+   Para modificar colores: cambiar rgba en background y color
+   Para ajustar espaciados: modificar padding, margin, gap */
+
+/* =============================================
+   LAYOUT PRINCIPAL
+   ============================================= */
+
+.seller-content {
+    padding-top: 120px; /* Espacio para navbar fijo */
+    min-height: 100vh;
+    color: white;
+}
+
+/* =============================================
+   SECCIÓN HEADER DEL PANEL
+   Contiene título, descripción y botón principal
+   ============================================= */
+
+.seller-header-section {
+    padding: 60px 20px 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.seller-header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.seller-panel-title {
+    font-size: 36px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 0%, #a8d8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.seller-panel-desc {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 500px;
+    line-height: 1.6;
+}
+
+/* =============================================
+   BOTÓN PRINCIPAL "CREAR PRODUCTO"
+   Reutilizado también en el estado vacío
+   ============================================= */
+
+.btn-create-product {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #a8d8ff 0%, #4968ff 100%);
+    border: none;
+    border-radius: 100px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.btn-create-product:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(168, 216, 255, 0.4);
+}
+
+/* =============================================
+   SECCIÓN DEL FORMULARIO (COLAPSABLE)
+   Por defecto oculta; se muestra al presionar "Crear Producto"
+   La animación se controla con .form-section--visible en JS
+   ============================================= */
+
+.seller-form-section {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: max-height 0.45s ease, opacity 0.35s ease, padding 0.35s ease;
+    pointer-events: none;
+}
+
+/* Clase que activa la visibilidad - toggleada por JS */
+.seller-form-section.form-section--visible {
+    max-height: 900px;
+    opacity: 1;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    pointer-events: auto;
+}
+
+.seller-section {
+    padding: 60px 20px;
+}
+
+.seller-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Encabezado del formulario: título + botón cerrar */
+.form-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.form-section-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 0%, #a8d8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Botón X para cerrar el formulario */
+.btn-close-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
+
+.btn-close-form:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* =============================================
+   ESTILOS DEL FORMULARIO (ORIGINALES - SIN CAMBIOS)
+   Mantienen el diseño ya aprobado del formulario de producto
+   ============================================= */
+
+#product-form {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 16px;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.form-group select {
+    appearance: none; /* Remover flecha por defecto para diseño personalizado */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    padding-right: 50px; /* Espacio para la flecha personalizada */
+}
+
+.form-group select option {
+    color: #000000; /* Corrección: Texto negro para contraste en dropdown (antes invisible) */
+    background: #ffffff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: rgba(168, 216, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(168, 216, 255, 0.2);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Código anterior conservado:
+   El input type="file" nativo quedaba visible y mostraba textos del navegador
+   ("Elegir archivo / No se ha seleccionado..."), lo que no seguía el estilo glass
+   de Zuno. La nueva implementación oculta visualmente el control real y usa un
+   botón propio con estado de archivo y preview. */
+.file-input-native {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.custom-file-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.custom-file-control:hover,
+.custom-file-control:focus-within {
+    border-color: rgba(168, 216, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(168, 216, 255, 0.16);
+}
+
+.file-select-btn {
+    border: 1px solid rgba(168, 216, 255, 0.38);
+    border-radius: 999px;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, rgba(168, 216, 255, 0.28), rgba(73, 104, 255, 0.38));
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.file-select-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(168, 216, 255, 0.22);
+}
+
+.file-name {
+    min-width: 0;
+    flex: 1;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.image-preview {
+    width: 100%;
+    max-height: 220px;
+    margin-top: 12px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Nueva implementación para selects:
+   Categoría e Inteligencia Artificial comparten exactamente esta misma clase
+   para mantener el mismo fondo, padding, borde, flecha y estados de interacción. */
+.form-group .form-select {
+    appearance: none;
+    min-height: 56px;
+    padding: 16px 50px 16px 16px;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 255, 255, 0.06);
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.88)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.form-group .form-select:hover {
+    border-color: rgba(168, 216, 255, 0.28);
+    background-color: rgba(255, 255, 255, 0.09);
+}
+
+.form-field-error input,
+.form-field-error textarea,
+.form-field-error .form-select,
+.form-field-error .select-selected,
+.form-field-error .custom-file-control {
+    border-color: rgba(239, 68, 68, 0.65);
+    box-shadow: 0 0 18px rgba(239, 68, 68, 0.14);
+}
+
+/* =============================================
+   CUSTOM DROPDOWN
+   =============================================
+   Código anterior (comentado conceptualmente):
+   se intentó personalizar el <select> nativo con .form-select, pero el panel
+   desplegado lo controla el navegador/sistema operativo y no permite un diseño
+   glass avanzado consistente. Por eso se reemplaza por div + button + ul/li.
+
+   Cómo funciona:
+   .select-selected muestra el valor actual, .select-options contiene los li
+   dinámicos y un input hidden guarda el valor para crear el producto. */
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.select-selected {
+    width: 100%;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 50px 16px 16px;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    background:
+        url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.88)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") right 16px center / 16px no-repeat,
+        rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    font: inherit;
+    font-size: 16px;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.select-selected:hover,
+.custom-select.open .select-selected,
+.select-selected:focus-visible {
+    border-color: rgba(168, 216, 255, 0.42);
+    background:
+        url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.95)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") right 16px center / 16px no-repeat,
+        rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(168, 216, 255, 0.16);
+}
+
+.custom-select.open .select-selected {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.select-options {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 20;
+    list-style: none;
+    margin: 0;
+    padding: 8px;
+    max-height: 240px;
+    overflow-y: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(168, 216, 255, 0.22);
+    background: rgba(22, 24, 38, 0.98);
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.34), 0 0 28px rgba(168, 216, 255, 0.08);
+    backdrop-filter: blur(16px);
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.custom-select.open .select-options {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.select-option {
+    padding: 12px 14px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.82);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.select-option:hover,
+.select-option.selected {
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(168, 216, 255, 0.18), rgba(73, 104, 255, 0.2));
+}
+
+.select-option:hover {
+    transform: translateX(2px);
+}
+
+.publish-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #a8d8ff 0%, #4968ff 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.publish-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(168, 216, 255, 0.4);
+}
+
+/* =============================================
+   SECCIÓN DASHBOARD - MIS PRODUCTOS
+   ============================================= */
+
+.seller-dashboard-section {
+    padding: 50px 20px 80px;
+}
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Encabezado de la sección de productos: título + contador */
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.dashboard-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* Badge contador de productos - se actualiza desde JS */
+.product-count {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(168, 216, 255, 0.8);
+    background: rgba(168, 216, 255, 0.1);
+    border: 1px solid rgba(168, 216, 255, 0.2);
+    padding: 6px 14px;
+    border-radius: 100px;
+}
+
+/* =============================================
+   ESTADO VACÍO
+   Visible cuando no hay productos creados
+   Oculto via JS cuando hay al menos 1 producto
+   ============================================= */
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+    /* Oculto por defecto; JS cambia display según cantidad de productos */
+}
+
+.empty-state-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    color: rgba(168, 216, 255, 0.6);
+}
+
+.empty-state-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 10px;
+}
+
+.empty-state-subtext {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.45);
+    max-width: 360px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* =============================================
+   GRID DE PRODUCTOS
+   Visible cuando hay al menos 1 producto
+   Oculto por defecto via JS
+   ============================================= */
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+/* =============================================
+   TARJETA DE PRODUCTO
+   Diseño coherente con las tarjetas de shop.html
+   Generada dinámicamente por renderProductGrid() en JS
+   ============================================= */
+
+.product-card-seller {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card-seller:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    border-color: rgba(168, 216, 255, 0.2);
+}
+
+/* Contenedor de imagen del producto */
+.product-card-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.product-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.product-card-seller:hover .product-card-image img {
+    transform: scale(1.04);
+}
+
+/* Badge "TRENDING" - visible solo si producto.trending === true */
+.badge-trending {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+}
+
+/* Cuerpo de la tarjeta */
+.product-card-body {
+    padding: 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Badge de categoría */
+.product-card-category {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(168, 216, 255, 0.75);
+}
+
+.product-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.4;
+    flex: 1;
+}
+
+.product-card-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #a8d8ff;
+    margin-top: 4px;
+}
+
+/* Pie de la tarjeta: botones de acción */
+.product-card-actions {
+    padding: 0 18px 18px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Botón ver - enlace a product-stats.html, estilizado como botón primario sutil */
+.btn-view-product {
+    flex: 1;
+    padding: 10px;
+    background: rgba(168, 216, 255, 0.1);
+    border: 1px solid rgba(168, 216, 255, 0.25);
+    border-radius: 8px;
+    color: rgba(168, 216, 255, 0.9);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-view-product:hover {
+    background: rgba(168, 216, 255, 0.2);
+    border-color: rgba(168, 216, 255, 0.5);
+    color: #ffffff;
+}
+
+/* Botón editar - placeholder (aún no funcional) */
+.btn-edit-product {
+    flex: 1;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-edit-product:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+}
+
+/* Botón eliminar - funcional, llama a deleteProduct(id) */
+.btn-delete-product {
+    flex: 1;
+    padding: 10px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 8px;
+    color: rgba(239, 68, 68, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-delete-product:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #ff6b6b;
+}
+
+/* =============================================
+   ANIMACIÓN DE ENTRADA DE TARJETAS
+   Las tarjetas aparecen escalonadas al renderizarse
+   ============================================= */
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-card-seller {
+    animation: cardFadeIn 0.35s ease forwards;
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+
+.seller-footer {
+    padding: 24px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 13px;
+    max-width: 100%;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.35);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 768px) {
+    .seller-content {
+        padding-top: 100px;
+    }
+
+    .seller-header-section {
+        padding: 40px 20px 30px;
+    }
+
+    .seller-header-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .seller-panel-title {
+        font-size: 28px;
+    }
+
+    .btn-create-product {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .seller-section {
+        padding: 40px 20px;
+    }
+
+    .seller-container {
+        /* En móvil el formulario ocupa todo el ancho disponible */
+    }
+
+    .form-section-header h2 {
+        font-size: 22px;
+    }
+
+    #product-form {
+        padding: 30px 20px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 14px;
+        font-size: 16px; /* Prevenir zoom en iOS */
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .seller-footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =============================================
+   ENLACES DE IMAGEN Y TÍTULO EN TARJETAS
+   Hacen clickable la imagen y el título hacia product.html
+   ============================================= */
+
+/* Envuelve la imagen: elimina decoración de enlace */
+.product-card-image-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Cursor pointer en la imagen al hover */
+.product-card-image-link .product-card-image {
+    cursor: pointer;
+}
+
+/* Envuelve el título */
+.product-card-title-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.product-card-title-link:hover .product-card-title {
+    color: #a8d8ff;
+    transition: color 0.2s ease;
+}
+
+/* =============================================
+   FIX LAYOUT FORMULARIO CREAR PRODUCTO
+   =============================================
+   Código anterior relevante:
+   .seller-form-section { overflow: hidden; max-height: 0; }
+   .seller-form-section.form-section--visible { max-height: 900px; }
+
+   Por qué se reemplaza:
+   el formulario creció al sumar más campos. El max-height fijo de 900px
+   recortaba el contenido visible y, combinado con overflow:hidden, hacía
+   que el botón final quedara debajo/cortado mientras "Mis Productos" seguía
+   ocupando su espacio normal.
+
+   Nueva solución:
+   cuando el formulario está abierto se deja crecer con altura automática,
+   overflow visible y separación vertical real. Así permanece en el flujo
+   normal del DOM y la página usa scroll natural en desktop y móvil. */
+.seller-form-section.form-section--visible {
+    max-height: none;
+    min-height: auto;
+    height: auto;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+    padding-top: 50px;
+    padding-bottom: 70px;
+    margin-bottom: 34px;
+}
+
+.seller-form-section.form-section--visible + .seller-dashboard-section {
+    padding-top: 34px;
+}
+
+#product-form {
+    min-height: auto;
+    height: auto;
+    overflow: visible;
+}
+
+.seller-container {
+    min-height: auto;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    /* Responsive: el formulario abierto conserva flujo vertical,
+       ocupa todo el ancho disponible y no se corta por alturas fijas. */
+    .seller-form-section.form-section--visible {
+        max-height: none;
+        overflow: visible;
+        padding-top: 36px;
+        padding-bottom: 56px;
+        margin-bottom: 28px;
+    }
+
+    .seller-form-section.form-section--visible + .seller-dashboard-section {
+        padding-top: 28px;
+    }
+
+    .seller-container,
+    #product-form {
+        width: 100%;
+    }
+}

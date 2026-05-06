@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zuno</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Navbar con efecto glass -->
+    <nav class="navbar-glass">
+        <div class="navbar-container">
+            <!-- Logo -->
+            <div class="navbar-logo">
+                <a href="#"><span class="logo-text">ZUNO</span></a>
+            </div>
+
+            <!-- Botón hamburguesa para móvil -->
+            <button class="nav-toggle" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <!-- Links de navegación -->
+            <ul class="nav-links">
+                <li><a href="./shop.html">Explorar</a></li>
+                <li><a href="./categories.html">Categorías</a></li>
+                <li><a href="./trending.html">Tendencias</a></li>
+                <li><a href="./how-it-works.html">Cómo funciona</a></li>
+                <li><a class="nav-special" href="./seller.html">Vender</a></li>
+                <li class="mobile-profile-link"><a href="./login.html">Perfil</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <!-- Hero centrado con typewriter, descripción y botones de acción -->
+        <section class="hero-card">
+            <h1 class="hero-title">
+                <span class="typewriter-text" id="typewriterText"></span>
+                <span class="typewriter-cursor" id="typewriterCursor">|</span>
+            </h1>
+
+            <!-- Descripción que aparece después de la animación de escritura -->
+            <p class="hero-description" id="heroDescription">
+                Descubre, compra y utiliza prompts diseñados para ayudarte a crear más rápido, mejor y sin complicaciones.
+            </p>
+
+            <!-- Botones principales de la pantalla de inicio -->
+            <div class="hero-actions" id="heroActions">
+                <button class="btn-login">Iniciar sesión</button>
+                <button class="btn-register btn-primary">Crear cuenta</button>
+            </div>
+        </section>
+    </main>
+    
+    <script src="../js/script.js"></script>
+</body>
+</html>

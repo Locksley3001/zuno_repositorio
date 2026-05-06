@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear cuenta - Zuno</title>
+  <link rel="stylesheet" href="../css/register-style.css">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="left">
+      <div class="top-copy">
+        <h1>Crea tu cuenta</h1>
+        <p>Empieza a usar prompts diseñados para acelerar tu creatividad y llevar tus ideas a resultados concretos.</p>
+      </div>
+
+      <div class="tabs">
+        <div class="tab" onclick="goToLogin()">Iniciar sesión</div>
+        <div class="tab active">Registrarse</div>
+      </div>
+
+      <div class="form active">
+        <input type="text" placeholder="Nombre completo" autocomplete="name">
+        <input type="email" placeholder="Correo electrónico" autocomplete="email">
+        <input type="password" placeholder="Contraseña" autocomplete="new-password">
+
+        <button id="btn-crear" class="btn btn-primary">Crear cuenta</button>
+
+        <div class="divider">O</div>
+
+        <div class="social">
+          <button class="social-button apple">
+            <img src="../assets-svg/apple-icon.svg" alt="Apple icon">
+            Registrarse con Apple
+          </button>
+          <button class="social-button google">
+            <img src="../assets-img/google-icon.png" alt="Google icon">
+            Registrarse con Google
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+    </div>
+
+  </div>
+
+  <script src="../js/register-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Zuno</title>
+  <link rel="stylesheet" href="../css/login-style.css">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="left">
+      <div class="top-copy">
+        <h1>Bienvenido de nuevo</h1>
+        <p>Accede a tu espacio y comienza a aprovechar prompts diseñados para trabajar más rápido y con mejor resultado.</p>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active">Login</div>
+        <div class="tab" onclick="goToRegister()">Registrarse</div>
+      </div>
+
+      <div class="form active">
+        <input type="email" placeholder="Correo electrónico" autocomplete="email">
+        <input type="password" placeholder="Contraseña" autocomplete="current-password">
+
+        <div class="row">
+          <label class="remember">
+            <input type="checkbox">
+            <span>Recordarme</span>
+          </label>
+          <button type="button" class="link-button">¿Olvidaste tu contraseña?</button>
+        </div>
+
+        <button id="btn-iniciar" class="btn btn-primary">Iniciar sesión</button>
+
+        <div class="divider">O</div>
+
+        <div class="social">
+          <button class="social-button apple">
+            <img src="../assets-svg/apple-icon.svg" alt="Apple icon">
+            Iniciar con Apple
+          </button>
+          <button class="social-button google">
+            <img src="../assets-img/google-icon.png" alt="Google icon">
+            Iniciar con Google
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+    </div>
+
+  </div>
+
+  <script src="../js/login-script.js"></script>
+</body>
+</html>

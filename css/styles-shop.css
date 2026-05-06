@@ -1,0 +1,462 @@
+/* Estilos específicos de la tienda - Extensión coherente con identidad visual
+   Mantener colores oscuros, glassmorphism, gradientes azules
+   Espaciados y tipografía consistente
+   Para modificar colores: cambiar rgba en background y color
+   Para ajustar espaciados: modificar padding, margin, gap
+   Para cambiar layout: ajustar grid-template-columns */
+
+.shop-content {
+    padding-top: 120px; /* Espacio para navbar fijo */
+    min-height: 100vh;
+    color: white;
+}
+
+/* Buscador principal */
+.main-search {
+    padding: 60px 20px 40px;
+    text-align: center;
+}
+
+.search-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-input-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#main-search-input {
+    width: 100%;
+    padding: 20px 60px 20px 24px;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    font-size: 18px;
+    outline: none;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+#main-search-input:focus {
+    border-color: rgba(168, 216, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(168, 216, 255, 0.2);
+}
+
+#main-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.main-search-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, rgba(168, 216, 255, 0.2), rgba(100, 180, 255, 0.2));
+    border: 1px solid rgba(168, 216, 255, 0.4);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.main-search-btn:hover {
+    background: linear-gradient(135deg, rgba(168, 216, 255, 0.4), rgba(100, 180, 255, 0.4));
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 4px 12px rgba(168, 216, 255, 0.3);
+}
+
+.search-suggestions {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    font-style: italic;
+}
+
+/* Secciones generales */
+.categories-section,
+.trending-section,
+.featured-section,
+.explore-section,
+.sell-section,
+.como-funciona-section {
+    padding: 60px 20px;
+}
+
+.categories-container,
+.trending-container,
+.featured-container,
+.explore-container,
+.sell-container,
+.como-funciona-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.categories-section h2,
+.trending-section h2,
+.featured-section h2,
+.explore-section h2,
+.sell-section h2,
+.como-funciona-section h2 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #ffffff 0%, #a8d8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Fondo diferenciado para sección de tendencias */
+.trending-section {
+    background: rgba(73, 104, 255, 0.05);
+    border-top: 1px solid rgba(168, 216, 255, 0.1);
+    border-bottom: 1px solid rgba(168, 216, 255, 0.1);
+}
+
+/* Categorías horizontales */
+.categories-scroll-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.categories-wrapper {
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.categories-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.categories-grid {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    scroll-snap-type: x mandatory;
+    width: max-content;
+    flex-wrap: nowrap; /* Corrección: Forzar layout horizontal sin wrap para evitar elementos fuera de lugar */
+}
+
+.scroll-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.scroll-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(168, 216, 255, 0.4);
+}
+
+.scroll-left {
+    margin-right: 10px;
+}
+
+.scroll-right {
+    margin-left: 10px;
+}
+
+.category-item {
+    flex: 0 0 200px; /* Aumentar ancho para tarjeta */
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px; /* Cambiar de 999px a rectangular */
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    scroll-snap-align: start;
+    /* Estilos para que sea compatible con <a> tags */
+    text-decoration: none;
+    color: inherit;
+}
+
+.category-item:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(168, 216, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(168, 216, 255, 0.2);
+}
+
+.category-item.active {
+    background: rgba(168, 216, 255, 0.15) !important;
+    border-color: rgba(168, 216, 255, 0.5) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(168, 216, 255, 0.2);
+}
+
+.category-icon {
+    font-size: 32px; /* Aumentar tamaño */
+    color: #a8d8ff;
+}
+
+.category-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.category-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+}
+
+.category-description {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Grids de productos */
+.trending-grid,
+.featured-grid,
+.explore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Tarjetas informativas en Cómo funciona */
+.como-funciona-section {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.info-cards-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(168, 216, 255, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(168, 216, 255, 0.15);
+}
+
+.info-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, rgba(168, 216, 255, 0.15), rgba(100, 180, 255, 0.15));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a8d8ff;
+}
+
+.info-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.info-card p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+/* Sección vender */
+.sell-section {
+    background: linear-gradient(135deg, rgba(73, 104, 255, 0.08), rgba(154, 100, 255, 0.06));
+    text-align: center;
+}
+
+.sell-container h2 {
+    margin-bottom: 16px;
+}
+
+.sell-container p {
+    max-width: 600px;
+    margin: 0 auto 32px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.btn-sell {
+    background: linear-gradient(135deg, rgba(168, 216, 255, 0.3), rgba(100, 180, 255, 0.3));
+    border: 2px solid rgba(168, 216, 255, 0.5);
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(168, 216, 255, 0.2);
+}
+
+.btn-sell:hover {
+    background: linear-gradient(135deg, rgba(168, 216, 255, 0.5), rgba(100, 180, 255, 0.5));
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(168, 216, 255, 0.3);
+}
+
+/* Footer */
+.footer {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 40px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #a8d8ff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .shop-content {
+        padding-top: 100px;
+    }
+
+    .main-search {
+        padding: 40px 20px 20px;
+    }
+
+    #main-search-input {
+        font-size: 16px;
+        padding: 16px 50px 16px 20px;
+    }
+
+    .main-search-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .categories-section h2,
+    .trending-section h2,
+    .featured-section h2,
+    .explore-section h2,
+    .sell-section h2,
+    .como-funciona-section h2 {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .categories-grid {
+        gap: 16px;
+        padding: 16px 0;
+    }
+
+    .category-item {
+        flex: 0 0 120px;
+        padding: 12px 16px;
+    }
+
+    .scroll-btn {
+        display: none;
+    }
+
+    .trending-grid,
+    .featured-grid,
+    .explore-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .info-cards-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .info-card {
+        padding: 24px 20px;
+    }
+
+    .sell-container p {
+        font-size: 16px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        gap: 16px;
+    }
+}
+/* =============================================
+   TARJETA-ENLACE
+   Las tarjetas ahora son <a> en lugar de <div>.
+   Estas reglas eliminan la decoración de enlace
+   sin tocar el diseño existente de .product-card.
+   ============================================= */
+.product-card--link {
+    display: block;          /* <a> es inline por defecto */
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+/* El botón "Comprar" dentro de la tarjeta-enlace
+   usa event.preventDefault() + stopPropagation()
+   para no navegar al hacer click en él */

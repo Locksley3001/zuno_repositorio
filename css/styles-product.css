@@ -1,0 +1,861 @@
+/* styles-product.css
+   Estilos para la página de detalle de producto.
+   Identidad visual: fondo oscuro, glassmorphism, gradientes azules (#a8d8ff / #4968ff).
+   Para ajustar colores: buscar rgba() y gradientes.
+   Para ajustar layout: modificar .pd-hero-container grid-template-columns. */
+
+/* =============================================
+   LAYOUT BASE
+   ============================================= */
+
+.product-content {
+    padding-top: 120px; /* Espacio para el navbar fijo */
+    min-height: 100vh;
+    color: white;
+}
+
+/* Contenedor centrado reutilizable en cada sección */
+.pd-section-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* =============================================
+   ESTADOS DE CARGA Y ERROR
+   ============================================= */
+
+.pd-loading,
+.pd-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 15px;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Spinner circular animado */
+.pd-spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid rgba(168, 216, 255, 0.15);
+    border-top-color: rgba(168, 216, 255, 0.8);
+    animation: pdSpin 0.8s linear infinite;
+}
+
+@keyframes pdSpin {
+    to { transform: rotate(360deg); }
+}
+
+.pd-error-icon { color: rgba(168, 216, 255, 0.45); }
+
+.pd-error h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.pd-error p {
+    color: rgba(255, 255, 255, 0.45);
+    max-width: 300px;
+    line-height: 1.6;
+}
+
+.pd-btn-back {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: rgba(168, 216, 255, 0.1);
+    border: 1px solid rgba(168, 216, 255, 0.25);
+    border-radius: 100px;
+    color: rgba(168, 216, 255, 0.9);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.pd-btn-back:hover {
+    background: rgba(168, 216, 255, 0.2);
+    color: white;
+}
+
+/* =============================================
+   BREADCRUMB
+   Ej: Explorar > Logos > Título del producto
+   ============================================= */
+
+.pd-breadcrumb {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.pd-breadcrumb a {
+    color: rgba(255, 255, 255, 0.45);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.pd-breadcrumb a:hover { color: rgba(168, 216, 255, 0.85); }
+
+.pd-breadcrumb-sep {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 12px;
+}
+
+.pd-breadcrumb-current {
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 500;
+    /* Trunca si el título es muy largo */
+    max-width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* =============================================
+   SECCIÓN HERO — DOS COLUMNAS
+   desktop: imagen | info
+   mobile:  imagen encima, info debajo
+   ============================================= */
+
+.pd-hero-section {
+    padding: 32px 0 60px;
+}
+
+.pd-hero-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    /* 55% imagen | 45% info — ajustable aquí */
+    grid-template-columns: 55fr 45fr;
+    gap: 48px;
+    align-items: start;
+}
+
+/* ── COLUMNA IZQUIERDA: IMAGEN ── */
+
+.pd-image-col {
+    position: sticky;
+    top: 110px; /* Se queda fija al hacer scroll, debajo del navbar */
+}
+
+/* Contenedor de imagen con aspect-ratio fijo */
+.pd-image-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+}
+
+.pd-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.pd-image-wrapper:hover img {
+    transform: scale(1.03);
+}
+
+/* Badge trending sobre la imagen */
+.pd-badge-trending {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    text-transform: uppercase;
+}
+
+/* ── COLUMNA DERECHA: INFO ── */
+
+.pd-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Los gaps se controlan con margin en cada elemento */
+}
+
+/* Badge de categoría */
+.pd-category-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(168, 216, 255, 0.8);
+    background: rgba(168, 216, 255, 0.1);
+    border: 1px solid rgba(168, 216, 255, 0.2);
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 18px;
+    width: fit-content;
+}
+
+/* Extensión de metadatos:
+   Código anterior: la página mostraba solo .pd-category-badge.
+   Se agrega una fila flexible para alinear categoría e IA sin cambiar el layout
+   del hero. Para modificar estilos de IA, ajustar .pd-ai-badge. */
+.pd-meta-badges {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.pd-meta-badges .pd-category-badge {
+    margin-bottom: 0;
+}
+
+.pd-ai-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(232, 245, 255, 0.86);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(168, 216, 255, 0.16);
+    padding: 5px 14px;
+    border-radius: 100px;
+    width: fit-content;
+}
+
+/* Título del producto */
+.pd-product-title {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: rgba(255, 255, 255, 0.97);
+    margin-bottom: 20px;
+    /* Gradiente sutil en el texto, igual que el resto del sistema */
+    background: linear-gradient(135deg, #ffffff 0%, #d4eeff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Precio grande */
+.pd-price {
+    font-size: 36px;
+    font-weight: 800;
+    color: #a8d8ff;
+    margin-bottom: 28px;
+    line-height: 1;
+}
+
+/* Separador visual antes de los botones */
+.pd-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin-bottom: 28px;
+}
+
+/* ── BOTONES DE ACCIÓN ── */
+
+.pd-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+/* Botón primario: "Comprar ahora" */
+.pd-btn-buy {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #a8d8ff 0%, #4968ff 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pd-btn-buy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(73, 104, 255, 0.4);
+}
+
+.pd-btn-buy:active {
+    transform: translateY(0);
+}
+
+/* Botón secundario: "Agregar al carrito" */
+.pd-btn-cart {
+    width: 100%;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.pd-btn-cart:hover {
+    background: rgba(255, 255, 255, 0.13);
+    border-color: rgba(168, 216, 255, 0.4);
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Estado "en carrito" del botón secundario */
+.pd-btn-cart.in-cart {
+    background: rgba(74, 222, 128, 0.1);
+    border-color: rgba(74, 222, 128, 0.35);
+    color: #4ade80;
+}
+
+/* Nota de garantía debajo de los botones */
+.pd-guarantee {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.38);
+}
+
+.pd-guarantee svg {
+    flex-shrink: 0;
+    color: rgba(74, 222, 128, 0.6);
+}
+
+/* =============================================
+   SECCIÓN DESCRIPCIÓN
+   ============================================= */
+
+.pd-description-section {
+    padding: 0 0 70px;
+}
+
+/* Título de sección unificado */
+.pd-section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Cuerpo de la descripción */
+.pd-description-body {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 28px 32px;
+    font-size: 16px;
+    line-height: 1.85;
+    color: rgba(255, 255, 255, 0.72);
+    /* Preserva saltos de línea si los hay en el texto */
+    white-space: pre-wrap;
+}
+
+/* =============================================
+   SECCIÓN PRODUCTOS RELACIONADOS
+   Mismas tarjetas que en shop.html
+   ============================================= */
+
+.pd-related-section {
+    padding: 0 0 80px;
+}
+
+/* Grid de tarjetas relacionadas */
+.pd-related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* ── TARJETA DE PRODUCTO RELACIONADO ──
+   Mismo estilo que las tarjetas de shop.html para coherencia */
+
+.pd-related-card {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    animation: pdFadeUp 0.4s ease forwards;
+    opacity: 0;
+}
+
+.pd-related-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+    border-color: rgba(168, 216, 255, 0.2);
+}
+
+/* Imagen de la tarjeta */
+.pd-related-image {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+    position: relative;
+}
+
+.pd-related-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.pd-related-card:hover .pd-related-image img {
+    transform: scale(1.05);
+}
+
+/* Badge trending en tarjeta relacionada */
+.pd-related-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 3px 9px;
+    border-radius: 100px;
+    text-transform: uppercase;
+}
+
+/* Cuerpo de la tarjeta relacionada */
+.pd-related-body {
+    padding: 14px 16px 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.pd-related-category {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(168, 216, 255, 0.65);
+}
+
+/* Tarjetas relacionadas: reutilizan la misma idea de categoría + IA.
+   Si el producto no tiene aiTool, JS no renderiza .pd-related-ai-badge. */
+.pd-related-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.pd-related-ai-badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(232, 245, 255, 0.72);
+    border: 1px solid rgba(168, 216, 255, 0.14);
+    border-radius: 999px;
+    padding: 2px 7px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.pd-related-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.4;
+    flex: 1;
+}
+
+.pd-related-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #a8d8ff;
+    margin-top: 4px;
+}
+
+/* =============================================
+   TOAST DE CONFIRMACIÓN (carrito)
+   Aparece en la esquina inferior derecha
+   Se muestra/oculta con la clase .pd-toast--visible
+   ============================================= */
+
+.pd-toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: rgba(20, 28, 60, 0.95);
+    border: 1px solid rgba(168, 216, 255, 0.25);
+    border-radius: 12px;
+    padding: 14px 20px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    /* Oculto por defecto — JS agrega .pd-toast--visible */
+    transform: translateY(16px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pd-toast--visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.pd-toast-icon {
+    color: #4ade80;
+    flex-shrink: 0;
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+
+.pd-footer {
+    padding: 24px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 13px;
+}
+
+.pd-footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.pd-footer-links a {
+    color: rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.pd-footer-links a:hover { color: rgba(255, 255, 255, 0.65); }
+
+/* =============================================
+   ANIMACIONES
+   ============================================= */
+
+@keyframes pdFadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pdFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.pd-hero-container,
+.pd-description-body {
+    animation: pdFadeIn 0.45s ease forwards;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 900px) {
+    .product-content {
+        padding-top: 100px;
+    }
+
+    /* Mobile: una sola columna */
+    .pd-hero-container {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    /* En mobile la imagen no es sticky */
+    .pd-image-col {
+        position: static;
+    }
+
+    .pd-product-title {
+        font-size: 26px;
+    }
+
+    .pd-price {
+        font-size: 28px;
+    }
+
+    /* Productos relacionados: 2 columnas en tablet */
+    .pd-related-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pd-toast {
+        bottom: 20px;
+        right: 16px;
+        left: 16px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 540px) {
+    .pd-hero-container,
+    .pd-section-container {
+        padding: 0 16px;
+    }
+
+    .pd-breadcrumb {
+        padding: 24px 16px 0;
+    }
+
+    .pd-product-title {
+        font-size: 22px;
+    }
+
+    .pd-price {
+        font-size: 24px;
+    }
+
+    /* En móvil pequeño: 1 columna para relacionados */
+    .pd-related-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pd-description-body {
+        padding: 20px;
+        font-size: 15px;
+    }
+}
+
+/* =============================================
+   BOTÓN CARRITO — ESTADO "ELIMINAR"
+   Cuando .in-cart está activo el botón muestra
+   "Eliminar del carrito" con estilo rojo suave
+   para diferenciarlo visualmente del estado default.
+   ============================================= */
+
+/* Sobreescribe el estilo glass neutro del estado por defecto */
+.pd-btn-cart.in-cart {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.35);
+    color: #f87171;
+}
+
+.pd-btn-cart.in-cart:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.55);
+    color: #ff8585;
+    transform: translateY(-1px);
+}
+
+/* =============================================
+   TOAST — VARIANTES DE COLOR POR TIPO
+   ============================================= */
+
+/* Verde: confirmación carrito */
+.pd-toast-icon          { color: #4ade80; }
+
+/* Azul: comprar ahora */
+.pd-toast-icon--blue    { color: #a8d8ff; }
+
+/* Rojo suave: eliminar del carrito */
+.pd-toast-icon--red     { color: #f87171; }
+
+/* =============================================
+   MODAL DE CONFIRMACIÓN
+   Overlay oscuro + caja centrada con animación.
+   El modal se inyecta en el DOM desde JS y se
+   elimina al cerrarse (no acumula elementos).
+   ============================================= */
+
+/* Overlay: cubre toda la pantalla con fondo oscuro translúcido */
+.pd-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    /* Animación de entrada: opacidad */
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.pd-modal-overlay--visible {
+    opacity: 1;
+}
+
+/* Caja del modal */
+.pd-modal-box {
+    background: rgba(10, 14, 35, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 36px 32px 28px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    /* Animación de entrada: escala */
+    transform: scale(0.94) translateY(8px);
+    transition: transform 0.25s ease;
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.6),
+        inset 0 1px 1px rgba(255, 255, 255, 0.06);
+}
+
+.pd-modal-overlay--visible .pd-modal-box {
+    transform: scale(1) translateY(0);
+}
+
+/* Ícono del modal */
+.pd-modal-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: #f87171;
+}
+
+/* Título del modal */
+.pd-modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 10px;
+}
+
+/* Mensaje del modal */
+.pd-modal-message {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.65;
+    margin-bottom: 28px;
+}
+
+.pd-modal-message strong {
+    color: rgba(255, 255, 255, 0.88);
+    font-weight: 600;
+}
+
+/* Fila de botones */
+.pd-modal-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Base común de botones del modal */
+.pd-modal-btn {
+    flex: 1;
+    padding: 13px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    border: 1px solid transparent;
+}
+
+/* Cancelar: glass neutro */
+.pd-modal-btn--cancel {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.pd-modal-btn--cancel:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+}
+
+.pd-modal-btn--cancel:focus-visible {
+    outline: 2px solid rgba(168, 216, 255, 0.6);
+    outline-offset: 2px;
+}
+
+/* Confirmar (Eliminar): rojo sólido */
+.pd-modal-btn--confirm {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #f87171;
+}
+
+.pd-modal-btn--confirm:hover {
+    background: rgba(239, 68, 68, 0.28);
+    border-color: rgba(239, 68, 68, 0.65);
+    color: #ff9090;
+}
+
+.pd-modal-btn--confirm:focus-visible {
+    outline: 2px solid rgba(239, 68, 68, 0.5);
+    outline-offset: 2px;
+}
+
+/* Responsive del modal */
+@media (max-width: 480px) {
+    .pd-modal-box {
+        padding: 28px 20px 22px;
+    }
+
+    .pd-modal-actions {
+        flex-direction: column-reverse; /* Confirmar arriba, cancelar abajo en mobile */
+    }
+}
