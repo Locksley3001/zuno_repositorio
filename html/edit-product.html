@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto - Zuno</title>
+    <!-- Identidad visual base (misma que seller.html) -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles-navbar.css">
+    <!-- Estilos del formulario de seller reutilizados íntegramente -->
+    <link rel="stylesheet" href="../css/styles-seller.css">
+    <!-- Estilos específicos de esta página (header, breadcrumb, variantes) -->
+    <link rel="stylesheet" href="../css/styles-edit-product.css">
+</head>
+<body>
+
+    <!-- ==========================================
+         NAVBAR (idéntico al de seller.html)
+         ========================================== -->
+    <nav class="navbar-glass">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <a href="./intex.html"><span class="logo-text">ZUNO</span></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="./shop.html">Explorar</a></li>
+                <li><a href="./categories.html">Categorías</a></li>
+                <li><a href="./trending.html">Tendencias</a></li>
+                <li><a href="./how-it-works.html">Cómo funciona</a></li>
+                <li><a class="nav-special" href="./seller.html">Vendedor</a></li>
+                <li class="mobile-profile-link"><a href="./login.html">Perfil</a></li>
+            </ul>
+            <div class="navbar-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar productos..." id="navbar-search">
+                    <button class="search-btn" aria-label="Buscar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M21 21L16.5 16.5M19 11C19 15.4183 15.4183 19 11 19S3 15.4183 3 11 6.58172 3 11 3s8 3.58172 8 8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <button class="cart-btn" aria-label="Carrito">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 22C7.89543 22 7 21.1046 7 20V8C7 6.89543 7.89543 6 9 6H15C16.1046 6 17 6.89543 17 8V20C17 21.1046 16.1046 22 15 22H9Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M7 6V4C7 2.89543 7.89543 2 9 2H15C16.1046 2 17 2.89543 17 4V6" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="9.5" cy="20.5" r="0.5" fill="currentColor"/>
+                        <circle cx="14.5" cy="20.5" r="0.5" fill="currentColor"/>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="profile-btn" aria-label="Perfil">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <button class="nav-toggle" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         CONTENIDO PRINCIPAL
+         JS inyecta el contenido según el estado:
+           - #ep-loading  → mientras busca el producto
+           - #ep-error    → si el ID no existe
+           - #ep-main     → formulario precargado
+         ========================================== -->
+    <main class="ep-content">
+
+        <!-- Estado de carga -->
+        <div class="ep-loading" id="ep-loading">
+            <div class="ep-spinner"></div>
+            <p>Cargando producto...</p>
+        </div>
+
+        <!-- Estado de error (ID no encontrado en localStorage) -->
+        <div class="ep-error" id="ep-error" style="display:none">
+            <div class="ep-error-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M12 8V12M12 16H12.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h2>Producto no encontrado</h2>
+            <p>El producto que intentas editar no existe o fue eliminado.</p>
+            <a href="./seller.html" class="ep-btn-back">Volver al panel</a>
+        </div>
+
+        <!-- Formulario de edición: visible cuando el producto existe -->
+        <div id="ep-main" style="display:none">
+
+            <!-- Breadcrumb: Panel > Editar -->
+            <nav class="ep-breadcrumb" aria-label="Navegación">
+                <a href="./seller.html" class="ep-breadcrumb-link">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Panel de vendedor
+                </a>
+                <span class="ep-breadcrumb-sep">›</span>
+                <span class="ep-breadcrumb-current">Editar producto</span>
+            </nav>
+
+            <!-- Header de la página -->
+            <section class="ep-header-section">
+                <div class="ep-header-container">
+                    <h1 class="ep-page-title">Editar Producto</h1>
+                    <p class="ep-page-desc">Modifica los datos del producto y guarda los cambios.</p>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 FORMULARIO DE EDICIÓN
+                 Estructura idéntica al de crear producto
+                 en seller.html para reutilizar todos los
+                 estilos de styles-seller.css sin duplicarlos.
+                 ========================================== -->
+            <section class="ep-form-section">
+                <div class="seller-container">
+                    <form id="edit-product-form" enctype="multipart/form-data" novalidate>
+
+                        <!-- ── IMAGEN ── -->
+                        <div class="form-group">
+                            <label for="ep-image">Imagen del Producto</label>
+                            <!-- Input real oculto; el botón personalizado lo dispara -->
+                            <input
+                                class="file-input-native"
+                                type="file"
+                                id="ep-image"
+                                name="image"
+                                accept="image/*"
+                            >
+                            <div class="custom-file-control">
+                                <button type="button" class="file-select-btn" id="ep-file-btn">
+                                    Cambiar imagen
+                                </button>
+                                <span class="file-name" id="ep-file-name">Imagen actual</span>
+                            </div>
+                            <!-- Preview: muestra la imagen actual al cargar y la nueva al cambiar -->
+                            <img
+                                class="image-preview"
+                                id="ep-image-preview"
+                                alt="Preview del producto"
+                            >
+                        </div>
+
+                        <!-- ── TÍTULO ── -->
+                        <div class="form-group">
+                            <label for="ep-title">Título del Producto</label>
+                            <input
+                                type="text"
+                                id="ep-title"
+                                name="title"
+                                required
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <!-- ── DESCRIPCIÓN ── -->
+                        <div class="form-group">
+                            <label for="ep-description">Descripción</label>
+                            <textarea
+                                id="ep-description"
+                                name="description"
+                                rows="4"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <!-- ── PRECIO ── -->
+                        <div class="form-group">
+                            <label for="ep-price">Precio ($)</label>
+                            <input
+                                type="number"
+                                id="ep-price"
+                                name="price"
+                                step="0.01"
+                                min="0"
+                                required
+                            >
+                        </div>
+
+                        <!-- ── CATEGORÍA (custom dropdown) ── -->
+                        <div class="form-group">
+                            <label>Categoría</label>
+                            <!-- Input hidden guarda el valor real para validación y submit -->
+                            <input type="hidden" id="ep-category" name="category" required>
+                            <div
+                                class="custom-select"
+                                data-target="ep-category"
+                                data-placeholder="Seleccionar categoría"
+                            >
+                                <button
+                                    type="button"
+                                    class="select-selected"
+                                    aria-haspopup="listbox"
+                                    aria-expanded="false"
+                                >
+                                    Seleccionar categoría
+                                </button>
+                                <ul class="select-options" role="listbox"></ul>
+                            </div>
+                        </div>
+
+                        <!-- ── INTELIGENCIA ARTIFICIAL (custom dropdown) ── -->
+                        <div class="form-group">
+                            <label>Inteligencia Artificial</label>
+                            <input type="hidden" id="ep-ai" name="aiTool" required>
+                            <div
+                                class="custom-select"
+                                data-target="ep-ai"
+                                data-placeholder="Seleccionar IA"
+                            >
+                                <button
+                                    type="button"
+                                    class="select-selected"
+                                    aria-haspopup="listbox"
+                                    aria-expanded="false"
+                                >
+                                    Seleccionar IA
+                                </button>
+                                <ul class="select-options" role="listbox"></ul>
+                            </div>
+                        </div>
+
+                        <!-- ── BOTONES ── -->
+                        <div class="ep-form-actions">
+                            <!-- Guardar cambios: submit del form -->
+                            <button type="submit" class="publish-btn" id="ep-submit-btn">
+                                Guardar cambios
+                            </button>
+                            <!-- Cancelar: vuelve al panel sin guardar -->
+                            <a href="./seller.html" class="ep-btn-cancel">
+                                Cancelar
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+            </section>
+
+        </div><!-- /ep-main -->
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="seller-footer">
+        <p>© 2024 Zuno. Todos los derechos reservados.</p>
+        <div class="footer-links">
+            <a href="#">Términos</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Contacto</a>
+        </div>
+    </footer>
+
+    <!-- Toast de confirmación (se muestra al guardar con éxito) -->
+    <div class="ep-toast" id="ep-toast" aria-live="polite"></div>
+
+    <script src="../js/script-edit-product.js"></script>
+</body>
+</html>
