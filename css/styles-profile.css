@@ -1,0 +1,623 @@
+/* styles-profile.css
+   ─────────────────────────────────────────────────────────────────────
+   Estilos para profile.html.
+   Identidad visual: fondo oscuro, glassmorphism, gradientes azules.
+   Reutiliza los tokens de color del sistema:
+     #a8d8ff / #4968ff  → azul principal
+     rgba(255,255,255,0.06-0.12) → glass
+   ─────────────────────────────────────────────────────────────────────
+   PARA MODIFICAR:
+   - Colores: buscar rgba() y gradientes.
+   - Layout de las cards: ajustar .pf-sections-wrapper max-width/gap.
+   - Avatar: ajustar .pf-avatar width/height y font-size.
+   ─────────────────────────────────────────────────────────────────────
+*/
+
+/* =============================================
+   LAYOUT BASE
+   ============================================= */
+
+.pf-content {
+    padding-top: 120px; /* Mismo que seller, product, etc. */
+    min-height: 100vh;
+    color: white;
+    padding-bottom: 80px;
+}
+
+/* =============================================
+   ESTADOS: CARGA Y SIN USUARIO
+   ============================================= */
+
+.pf-loading,
+.pf-no-user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 16px;
+    text-align: center;
+    padding: 20px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pf-spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid rgba(168, 216, 255, 0.15);
+    border-top-color: rgba(168, 216, 255, 0.8);
+    animation: pfSpin 0.8s linear infinite;
+}
+
+@keyframes pfSpin {
+    to { transform: rotate(360deg); }
+}
+
+.pf-no-user-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(168, 216, 255, 0.5);
+    margin-bottom: 8px;
+}
+
+.pf-no-user h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.pf-no-user p {
+    color: rgba(255, 255, 255, 0.45);
+    max-width: 300px;
+    line-height: 1.6;
+}
+
+.pf-no-user-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+/* =============================================
+   BREADCRUMB
+   ============================================= */
+
+.pf-breadcrumb {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 36px 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.pf-breadcrumb-link {
+    color: rgba(255, 255, 255, 0.45);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.pf-breadcrumb-link:hover {
+    color: rgba(168, 216, 255, 0.85);
+}
+
+.pf-breadcrumb-sep {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 12px;
+}
+
+.pf-breadcrumb-current {
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 500;
+}
+
+/* =============================================
+   HERO: AVATAR + NOMBRE
+   ============================================= */
+
+.pf-hero-section {
+    padding: 28px 24px 32px;
+}
+
+.pf-hero-container {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Avatar: círculo con gradiente y letras iniciales.
+   El contenido (iniciales) se inyecta por JS. */
+.pf-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4968ff 0%, #a8d8ff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 20px rgba(73, 104, 255, 0.35);
+}
+
+.pf-username {
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 0%, #a8d8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+    line-height: 1.2;
+}
+
+.pf-useremail {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* =============================================
+   WRAPPER DE SECCIONES
+   Columna centrada con gap entre cards
+   ============================================= */
+
+.pf-sections-wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* =============================================
+   CARD GENÉRICA
+   Base de cada sección del perfil.
+   ============================================= */
+
+.pf-card {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    animation: pfFadeUp 0.4s ease forwards;
+    opacity: 0;
+}
+
+.pf-card:nth-child(1) { animation-delay: 0.05s; }
+.pf-card:nth-child(2) { animation-delay: 0.12s; }
+.pf-card:nth-child(3) { animation-delay: 0.19s; }
+
+@keyframes pfFadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Card de zona de peligro (cerrar sesión) */
+.pf-card--danger {
+    border-color: rgba(239, 68, 68, 0.18);
+}
+
+/* ── Header de la card ── */
+.pf-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 24px 0;
+}
+
+/* Ícono de categoría de la card */
+.pf-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pf-card-icon--blue   { background: rgba(168, 216, 255, 0.12); color: #a8d8ff; }
+.pf-card-icon--purple { background: rgba(167, 139, 250, 0.12); color: #a78bfa; }
+.pf-card-icon--red    { background: rgba(239, 68, 68, 0.12);   color: #f87171; }
+
+.pf-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+/* ── Cuerpo de la card ── */
+.pf-card-body {
+    padding: 20px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* =============================================
+   CAMPOS DE INFORMACIÓN (solo lectura)
+   ============================================= */
+
+.pf-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pf-field:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.pf-field-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.pf-field-value {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.88);
+    font-weight: 500;
+    word-break: break-all;
+}
+
+/* Contraseña siempre ofuscada, ligeramente más grande */
+.pf-field-password {
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* =============================================
+   FORMULARIO DE CAMBIO DE CONTRASEÑA
+   Reutiliza los tokens visuales del formulario seller
+   (inputs glass, foco azul, placeholders tenues).
+   ============================================= */
+
+.pf-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pf-form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Wrapper para input + botón "ojo" */
+.pf-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.pf-input-wrapper input {
+    width: 100%;
+    padding: 14px 48px 14px 16px; /* Espacio derecho para el botón "ojo" */
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    font-size: 15px;
+    outline: none;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.pf-input-wrapper input:focus {
+    border-color: rgba(168, 216, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(168, 216, 255, 0.18);
+}
+
+.pf-input-wrapper input::placeholder {
+    color: rgba(255, 255, 255, 0.38);
+}
+
+/* Botón "ojo" para mostrar/ocultar contraseña */
+.pf-toggle-pwd {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.pf-toggle-pwd:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Mensajes de estado del formulario */
+.pf-form-msg {
+    font-size: 13px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.pf-form-msg--error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+}
+
+.pf-form-msg--success {
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+    color: #86efac;
+}
+
+/* ── Enlace "¿Olvidaste tu contraseña?" ── */
+.pf-forgot-pwd-row {
+    text-align: center;
+    margin-top: -4px;
+}
+
+.pf-btn-link {
+    background: none;
+    border: none;
+    color: rgba(168, 216, 255, 0.7);
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+    font-family: inherit;
+}
+
+.pf-btn-link:hover {
+    color: #a8d8ff;
+}
+
+/* =============================================
+   BOTONES
+   ============================================= */
+
+/* Primario: gradiente azul (igual que publish-btn en seller) */
+.pf-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #a8d8ff 0%, #4968ff 100%);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.pf-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(73, 104, 255, 0.4);
+}
+
+/* Ancho completo (para el submit del formulario) */
+.pf-btn-full {
+    width: 100%;
+}
+
+/* Secundario: glass neutro */
+.pf-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.pf-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+}
+
+/* Peligro: rojo suave (cerrar sesión) */
+.pf-btn-danger {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 22px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 10px;
+    color: #f87171;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    align-self: flex-start; /* No ocupar ancho completo */
+}
+
+.pf-btn-danger:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #ff8585;
+    transform: translateY(-1px);
+}
+
+/* Descripción dentro de la sección de sesión */
+.pf-session-desc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.65;
+    max-width: 400px;
+}
+
+/* =============================================
+   PERFIL ACTIVO EN NAVBAR
+   El botón de perfil resalta cuando estamos en profile.html
+   ============================================= */
+
+/* Código anterior: .profile-btn era un <button>.
+   En profile.html se convierte en <a> para semántica correcta
+   (es un enlace, no una acción). La clase --active lo resalta. */
+.profile-btn--active {
+    border-color: rgba(168, 216, 255, 0.5) !important;
+    background: rgba(168, 216, 255, 0.14) !important;
+    color: #a8d8ff !important;
+}
+
+/* =============================================
+   TOAST DE CONFIRMACIÓN
+   ============================================= */
+
+.pf-toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: rgba(10, 14, 35, 0.96);
+    border: 1px solid rgba(168, 216, 255, 0.22);
+    border-radius: 12px;
+    padding: 14px 20px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(16px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.pf-toast--visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.pf-toast-icon         { color: #4ade80; flex-shrink: 0; }
+.pf-toast-icon--red    { color: #f87171; }
+
+/* =============================================
+   FOOTER
+   ============================================= */
+
+.pf-footer {
+    padding: 24px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 13px;
+}
+
+.pf-footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.pf-footer-links a {
+    color: rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.pf-footer-links a:hover {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 768px) {
+    .pf-content {
+        padding-top: 100px;
+    }
+
+    .pf-hero-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .pf-sections-wrapper {
+        padding: 0 16px;
+    }
+
+    .pf-card-body {
+        padding: 16px 18px 20px;
+    }
+
+    .pf-card-header {
+        padding: 18px 18px 0;
+    }
+
+    .pf-username {
+        font-size: 22px;
+    }
+
+    .pf-btn-danger {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .pf-toast {
+        bottom: 16px;
+        right: 12px;
+        left: 12px;
+        justify-content: center;
+    }
+
+    .pf-footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}

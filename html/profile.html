@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Zuno</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles-navbar.css">
+    <link rel="stylesheet" href="../css/styles-profile.css">
+</head>
+<body>
+
+    <!-- ==========================================
+         NAVBAR — idéntico al resto del sistema
+         El botón .profile-btn del navbar lleva a profile.html
+         (conectado desde styles-navbar.css / script de cada página)
+         ========================================== -->
+    <nav class="navbar-glass">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <a href="./intex.html"><span class="logo-text">ZUNO</span></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="./shop.html">Explorar</a></li>
+                <li><a href="./categories.html">Categorías</a></li>
+                <li><a href="./trending.html">Tendencias</a></li>
+                <li><a href="./how-it-works.html">Cómo funciona</a></li>
+                <li><a class="nav-special" href="./seller.html">Vendedor</a></li>
+            </ul>
+            <div class="navbar-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar productos..." id="navbar-search">
+                    <button class="search-btn" aria-label="Buscar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M21 21L16.5 16.5M19 11C19 15.4183 15.4183 19 11 19S3 15.4183 3 11 6.58172 3 11 3s8 3.58172 8 8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <button class="cart-btn" aria-label="Carrito">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 22C7.89543 22 7 21.1046 7 20V8C7 6.89543 7.89543 6 9 6H15C16.1046 6 17 6.89543 17 8V20C17 21.1046 16.1046 22 15 22H9Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M7 6V4C7 2.89543 7.89543 2 9 2H15C16.1046 2 17 2.89543 17 4V6" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="9.5" cy="20.5" r="0.5" fill="currentColor"/>
+                        <circle cx="14.5" cy="20.5" r="0.5" fill="currentColor"/>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </button>
+                <!-- Perfil: resaltado porque estamos EN esta página -->
+                <a href="./profile.html" class="profile-btn profile-btn--active" aria-label="Mi perfil">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
+            <button class="nav-toggle" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         CONTENIDO PRINCIPAL
+         Tres estados gestionados por JS:
+           #pf-loading  → mientras lee localStorage
+           #pf-no-user  → si no hay sesión activa
+           #pf-main     → perfil completo del usuario
+         ========================================== -->
+    <main class="pf-content">
+
+        <!-- Estado carga -->
+        <div class="pf-loading" id="pf-loading">
+            <div class="pf-spinner"></div>
+            <p>Cargando perfil...</p>
+        </div>
+
+        <!-- Sin sesión activa -->
+        <div class="pf-no-user" id="pf-no-user" style="display:none">
+            <div class="pf-no-user-icon">
+                <svg width="52" height="52" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h2>No has iniciado sesión</h2>
+            <p>Inicia sesión o crea una cuenta para ver tu perfil.</p>
+            <div class="pf-no-user-actions">
+                <a href="./login.html"    class="pf-btn-primary">Iniciar sesión</a>
+                <a href="./register.html" class="pf-btn-secondary">Crear cuenta</a>
+            </div>
+        </div>
+
+        <!-- Perfil completo: visible cuando hay usuario en localStorage -->
+        <div id="pf-main" style="display:none">
+
+            <!-- Breadcrumb -->
+            <nav class="pf-breadcrumb" aria-label="Navegación">
+                <a href="./shop.html" class="pf-breadcrumb-link">Inicio</a>
+                <span class="pf-breadcrumb-sep">›</span>
+                <span class="pf-breadcrumb-current">Mi Perfil</span>
+            </nav>
+
+            <!-- ── AVATAR + NOMBRE ── -->
+            <section class="pf-hero-section">
+                <div class="pf-hero-container">
+                    <!-- Avatar generado con iniciales del nombre -->
+                    <div class="pf-avatar" id="pf-avatar" aria-hidden="true"></div>
+                    <div class="pf-hero-text">
+                        <h1 class="pf-username" id="pf-username">—</h1>
+                        <p class="pf-useremail" id="pf-useremail">—</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="pf-sections-wrapper">
+
+                <!-- =============================================
+                     SECCIÓN 1: INFORMACIÓN DE LA CUENTA
+                     Muestra nombre, email y contraseña ofuscada.
+                     Los valores se inyectan desde JS con renderUserInfo().
+                     ============================================= -->
+                <section class="pf-card" aria-labelledby="pf-info-title">
+                    <div class="pf-card-header">
+                        <div class="pf-card-icon pf-card-icon--blue">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h2 class="pf-card-title" id="pf-info-title">Información de la cuenta</h2>
+                    </div>
+                    <div class="pf-card-body">
+                        <div class="pf-field">
+                            <span class="pf-field-label">Nombre completo</span>
+                            <span class="pf-field-value" id="pf-info-name">—</span>
+                        </div>
+                        <div class="pf-field">
+                            <span class="pf-field-label">Correo electrónico</span>
+                            <span class="pf-field-value" id="pf-info-email">—</span>
+                        </div>
+                        <div class="pf-field">
+                            <span class="pf-field-label">Contraseña</span>
+                            <!-- Contraseña siempre ofuscada: nunca se muestra en claro -->
+                            <span class="pf-field-value pf-field-password">••••••••</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- =============================================
+                     SECCIÓN 2: CAMBIAR CONTRASEÑA
+                     Formulario con 3 inputs.
+                     Validación en script-profile.js:
+                       - contraseña actual correcta
+                       - nueva == confirmación
+                       - nueva ≠ actual
+                     ============================================= -->
+                <section class="pf-card" aria-labelledby="pf-pwd-title">
+                    <div class="pf-card-header">
+                        <div class="pf-card-icon pf-card-icon--purple">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h2 class="pf-card-title" id="pf-pwd-title">Cambiar contraseña</h2>
+                    </div>
+                    <div class="pf-card-body">
+                        <form id="pf-pwd-form" novalidate>
+                            <div class="pf-form-group">
+                                <label for="pf-current-pwd">Contraseña actual</label>
+                                <div class="pf-input-wrapper">
+                                    <input
+                                        type="password"
+                                        id="pf-current-pwd"
+                                        autocomplete="current-password"
+                                        placeholder="Tu contraseña actual"
+                                    >
+                                    <button type="button" class="pf-toggle-pwd" aria-label="Mostrar contraseña" data-target="pf-current-pwd">
+                                        <!-- Ícono "ojo" — JS alterna entre mostrar y ocultar -->
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M1 12C1 12 5 4 12 4s11 8 11 8-4 8-11 8S1 12 1 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="pf-form-group">
+                                <label for="pf-new-pwd">Nueva contraseña</label>
+                                <div class="pf-input-wrapper">
+                                    <input
+                                        type="password"
+                                        id="pf-new-pwd"
+                                        autocomplete="new-password"
+                                        placeholder="Mínimo 6 caracteres"
+                                    >
+                                    <button type="button" class="pf-toggle-pwd" aria-label="Mostrar contraseña" data-target="pf-new-pwd">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M1 12C1 12 5 4 12 4s11 8 11 8-4 8-11 8S1 12 1 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="pf-form-group">
+                                <label for="pf-confirm-pwd">Confirmar nueva contraseña</label>
+                                <div class="pf-input-wrapper">
+                                    <input
+                                        type="password"
+                                        id="pf-confirm-pwd"
+                                        autocomplete="new-password"
+                                        placeholder="Repite la nueva contraseña"
+                                    >
+                                    <button type="button" class="pf-toggle-pwd" aria-label="Mostrar contraseña" data-target="pf-confirm-pwd">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M1 12C1 12 5 4 12 4s11 8 11 8-4 8-11 8S1 12 1 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Mensajes de error y éxito del formulario -->
+                            <p class="pf-form-msg pf-form-msg--error" id="pf-pwd-error" style="display:none"></p>
+                            <p class="pf-form-msg pf-form-msg--success" id="pf-pwd-success" style="display:none"></p>
+
+                            <button type="submit" class="pf-btn-primary pf-btn-full">
+                                Guardar nueva contraseña
+                            </button>
+                        </form>
+
+                        <!-- Recuperar contraseña (simulación) -->
+                        <div class="pf-forgot-pwd-row">
+                            <button class="pf-btn-link" id="pf-forgot-btn">
+                                ¿Olvidaste tu contraseña?
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- =============================================
+                     SECCIÓN 3: ACCIONES DE SESIÓN
+                     Cerrar sesión → borra localStorage y redirige
+                     ============================================= -->
+                <section class="pf-card pf-card--danger" aria-labelledby="pf-session-title">
+                    <div class="pf-card-header">
+                        <div class="pf-card-icon pf-card-icon--red">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9M16 17L21 12L16 7M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h2 class="pf-card-title" id="pf-session-title">Sesión</h2>
+                    </div>
+                    <div class="pf-card-body">
+                        <p class="pf-session-desc">
+                            Al cerrar sesión se eliminará tu información de este dispositivo.
+                            Podrás volver a iniciar sesión en cualquier momento.
+                        </p>
+                        <button class="pf-btn-danger" id="pf-logout-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9M16 17L21 12L16 7M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Cerrar sesión
+                        </button>
+                    </div>
+                </section>
+
+            </div><!-- /pf-sections-wrapper -->
+
+        </div><!-- /pf-main -->
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="pf-footer">
+        <p>© 2024 Zuno. Todos los derechos reservados.</p>
+        <div class="pf-footer-links">
+            <a href="#">Términos</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Contacto</a>
+        </div>
+    </footer>
+
+    <!-- Toast de confirmación global -->
+    <div class="pf-toast" id="pf-toast" aria-live="polite"></div>
+
+    <script src="../js/script-profile.js"></script>
+</body>
+</html>
