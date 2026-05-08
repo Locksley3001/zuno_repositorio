@@ -415,6 +415,7 @@
     justify-content: center;
     gap: 8px;
     padding: 14px 24px;
+    margin-top: 20px;
     background: linear-gradient(135deg, #a8d8ff 0%, #4968ff 100%);
     border: none;
     border-radius: 10px;

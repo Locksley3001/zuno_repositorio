@@ -375,6 +375,9 @@ function setupNavbarToggle() {
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    // Navbar global: se inicializa antes de validar sesion porque profile.html tambien debe conservar navegacion si no hay usuario activo.
+    setupNavbarToggle();
+
     const loadingEl = document.getElementById('pf-loading');
     const noUserEl  = document.getElementById('pf-no-user');
     const mainEl    = document.getElementById('pf-main');
@@ -409,7 +412,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ── PASO 7: Configurar botones "ojo" ──
     setupPasswordToggles();
-
-    // ── PASO 8: Navbar mobile ──
-    setupNavbarToggle();
 });

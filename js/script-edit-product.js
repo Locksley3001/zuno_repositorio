@@ -513,11 +513,45 @@ function escapeHtml(str) {
     return div.innerHTML;
 }
 
+
+// =============================================
+// NAVBAR GLOBAL
+// Antes el toggle mobile se registraba al final de la carga del producto;
+// si edit-product.html abria sin ?id o con un ID invalido, el script retornaba antes
+// y el menu no podia abrirse. Se agrega esta inicializacion temprana para que
+// la navegacion hacia profile.html funcione tambien en estados de error.
+// =============================================
+function setupEditProductEarlyNavbarToggle() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navbar    = document.querySelector('.navbar-glass');
+    const navLinks  = document.querySelector('.nav-links');
+
+    if (!navToggle || !navbar || !navLinks) return;
+
+    navToggle.addEventListener('click', function (event) {
+        // Evita que el listener tardio original haga un segundo toggle si la pagina cargo un producto valido.
+        event.stopImmediatePropagation();
+        const isOpen = navbar.classList.toggle('open');
+        navToggle.classList.toggle('active', isOpen);
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+        navToggle.setAttribute('aria-label', isOpen ? 'Cerrar menu' : 'Abrir menu');
+    }, true);
+
+    navLinks.addEventListener('click', function (e) {
+        if (!e.target.closest('a')) return;
+        navbar.classList.remove('open');
+        navToggle.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Abrir menu');
+    });
+}
 // =============================================
 // 9. INICIALIZACIÓN
 // =============================================
 
 document.addEventListener('DOMContentLoaded', function () {
+
+    setupEditProductEarlyNavbarToggle();
 
     const loadingEl = document.getElementById('ep-loading');
     const errorEl   = document.getElementById('ep-error');

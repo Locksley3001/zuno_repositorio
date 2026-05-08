@@ -198,6 +198,11 @@
 
 .profile-btn {
     position: relative;
+    /* Perfil global: .profile-btn ahora puede ser <a> en todas las paginas; estas propiedades reemplazan el comportamiento visual nativo de <button> para mantener el mismo icono sin subrayado ni cambios de layout. */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 12px;
