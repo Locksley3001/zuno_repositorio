@@ -170,6 +170,12 @@ function scoreSearchProduct(product, query) {
     return score;
 }
 
+function getSearchProductGrids() {
+    return ['trending-grid', 'explore-grid']
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+}
+
 function getSearchTargetGrid() {
     return document.getElementById('explore-grid') || document.getElementById('trending-grid');
 }
@@ -180,7 +186,16 @@ function getSearchResultsContainer() {
 }
 
 function canRenderSearchOnCurrentPage() {
-    return Boolean(getSearchTargetGrid() && typeof renderProducts === 'function');
+    return Boolean(getSearchProductGrids().length && typeof renderProducts === 'function');
+}
+function setProductSectionVisible(gridId, isVisible) {
+    const grid = document.getElementById(gridId);
+    const section = grid ? grid.closest('section') : null;
+    if (!section) return;
+
+    // Visibilidad logica: durante busqueda se oculta Tendencias si no hay
+    // trending relacionados; al limpiar se restaura el flujo visual original.
+    section.style.display = isVisible ? '' : 'none';
 }
 
 function syncSearchInputs(value, sourceInput) {
@@ -232,8 +247,7 @@ function performSearch(searchTerm, options = {}) {
 
 function restoreDefaultProducts() {
     const allProducts = getSearchProducts();
-    const targetGrid = getSearchTargetGrid();
-    if (!targetGrid || typeof renderProducts !== 'function') return;
+    if (!getSearchProductGrids().length || typeof renderProducts !== 'function') return;
 
     // Si una pagina de categoria tiene su propio render, se respeta al limpiar busqueda.
     if (typeof loadCategoryPage === 'function' && window.location.pathname.endsWith('category.html')) {
@@ -241,18 +255,26 @@ function restoreDefaultProducts() {
         return;
     }
 
-    if (targetGrid.id === 'trending-grid' && !document.getElementById('explore-grid')) {
+    // Estado normal sin busqueda: tendencias vuelve a sus productos trending
+    // y explorar vuelve al listado completo, tal como lo deja script-shop.js al cargar.
+    setProductSectionVisible('trending-grid', true);
+    setProductSectionVisible('explore-grid', true);
+
+    if (document.getElementById('trending-grid')) {
         renderProducts(allProducts.filter(product => product.trending), 'trending-grid', true, 'trending');
-        return;
     }
 
-    renderProducts(allProducts, targetGrid.id);
+    if (document.getElementById('explore-grid')) {
+        // Estado normal separado: Explorar muestra productos no trending para
+        // evitar duplicados con Tendencias tambien cuando se limpia la busqueda.
+        renderProducts(allProducts.filter(product => !product.trending), 'explore-grid');
+    }
 }
 
 function filterProducts() {
     const allProducts = getSearchProducts();
-    const targetGrid = getSearchTargetGrid();
-    if (!targetGrid) return;
+    const productGrids = getSearchProductGrids();
+    if (!productGrids.length) return;
 
     let filteredProducts = [...allProducts];
 
@@ -269,7 +291,25 @@ function filterProducts() {
     if (!currentSearchTerm && !currentCategoryFilter) {
         restoreDefaultProducts();
     } else {
-        renderProducts(filteredProducts, targetGrid.id);
+        // Filtro global durante busqueda: se separa la misma lista filtrada en
+        // productos trending y productos normales para conservar la estructura visual.
+        // Reemplaza el render anterior que duplicaba los mismos resultados en ambos grids.
+        const filteredTrendingProducts = filteredProducts.filter(product => product.trending);
+        const filteredNormalProducts = filteredProducts.filter(product => !product.trending);
+
+        if (document.getElementById('trending-grid')) {
+            // Tendencias solo recibe productos filtrados que tambien son trending;
+            // se mantiene showBadge=true para no perder la etiqueta visual Trending.
+            setProductSectionVisible('trending-grid', filteredTrendingProducts.length > 0);
+            renderProducts(filteredTrendingProducts, 'trending-grid', true, 'trending');
+        }
+
+        if (document.getElementById('explore-grid')) {
+            // Explorar recibe solo productos filtrados no trending, evitando duplicados
+            // con la seccion Tendencias durante busquedas activas.
+            setProductSectionVisible('explore-grid', true);
+            renderProducts(filteredNormalProducts, 'explore-grid');
+        }
     }
 
     showNoResultsMessage(filteredProducts.length === 0 && Boolean(currentSearchTerm || currentCategoryFilter));

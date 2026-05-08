@@ -456,7 +456,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Anteriormente: const featuredProducts = products.filter(product => product.featured);
     // renderProducts(featuredProducts, 'featured-grid');
     // Razón: Sección de destacados eliminada según requerimientos
-
-    // Renderizar todos los productos en exploración
-    renderProducts(products, 'explore-grid');
+    // Renderizar productos normales en exploracion.
+    // Se reemplaza el listado completo porque los productos trending ya viven en
+    // la seccion Tendencias; asi se evita duplicarlos entre ambas secciones.
+    const normalProducts = products.filter(product => !product.trending);
+    renderProducts(normalProducts, 'explore-grid');
 });
